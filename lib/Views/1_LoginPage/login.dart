@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:ttum/Views/2_1_HomePage/ttum_homepage.dart';
 import 'package:ttum/Views/2_HomePage/product_definition.dart';
 
 class login extends StatefulWidget {
@@ -88,7 +89,7 @@ class _loginState extends State<login> {
                     MaterialPageRoute(builder: (context) => productDefinition()));
               },
               child: Container(
-                height: yukseklik*0.3,
+                height: yukseklik*0.15,
                 width: genislik*0.6,
                 margin: EdgeInsets.symmetric(vertical: 10),
                 padding: EdgeInsets.symmetric(horizontal: 20, vertical: 5),
@@ -96,6 +97,24 @@ class _loginState extends State<login> {
                   color: Colors.blueAccent,
                   borderRadius: BorderRadius.circular(29),
                 ),
+                child: Center(child: Text("Barkod denemesi")),
+              ),
+            ),
+            GestureDetector(
+              onTap: (){
+                Navigator.push(context,
+                    MaterialPageRoute(builder: (context) => ttumDeneme()));
+              },
+              child: Container(
+                height: yukseklik*0.15,
+                width: genislik*0.6,
+                margin: EdgeInsets.symmetric(vertical: 10),
+                padding: EdgeInsets.symmetric(horizontal: 20, vertical: 5),
+                decoration: BoxDecoration(
+                  color: Colors.blueAccent,
+                  borderRadius: BorderRadius.circular(29),
+                ),
+                child: Center(child: Text("Patron uygulaması")),
               ),
             ),
           ],

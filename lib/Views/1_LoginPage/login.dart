@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_signin_button/flutter_signin_button.dart';
 import 'package:ttum/Views/2_1_HomePage/ttum_homepage.dart';
 import 'package:ttum/Views/2_HomePage/product_definition.dart';
 
@@ -14,6 +15,13 @@ class _loginState extends State<login> {
   Widget build(BuildContext context) {
     double genislik = MediaQuery.of(context).size.width;
     double yukseklik = MediaQuery.of(context).size.height;
+    void _showButtonPressDialog(BuildContext context, String provider) {
+      Scaffold.of(context).showSnackBar(SnackBar(
+        content: Text('$provider Button Pressed!'),
+        backgroundColor: Colors.black26,
+        duration: Duration(milliseconds: 400),
+      ));
+    }
     return Scaffold(
       backgroundColor: Colors.yellowAccent,
       appBar: AppBar(title: Text("deneme"),),
@@ -82,6 +90,15 @@ class _loginState extends State<login> {
                   ),
                 ),
               ),
+            ),
+            SignInButtonBuilder(
+              text: 'Get going with Email',
+              icon: Icons.email,
+              onPressed: () {
+                _showButtonPressDialog(context, 'Email');
+              },
+              backgroundColor: Colors.blueGrey[700]!,
+              width: 220.0,
             ),
             GestureDetector(
               onTap: (){

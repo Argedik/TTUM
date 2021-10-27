@@ -335,7 +335,7 @@ class _ttumDenemeState extends State<ttumDeneme> {
                   height: 45,
                   color: Color(0xFF416BA9),
                   child: Row(
-                    children: [
+                    children: const [
                       SizedBox(width: 10.0,),
                       Icon(Icons.list_alt,color: Colors.white,),
                       SizedBox(width: 20.0,),
@@ -349,7 +349,7 @@ class _ttumDenemeState extends State<ttumDeneme> {
                 ),
               ),
               Container(
-                decoration: BoxDecoration(
+                decoration: const BoxDecoration(
                   color: Color(0xFF416BA9),
                   border: Border(
                     bottom: BorderSide(
@@ -363,7 +363,7 @@ class _ttumDenemeState extends State<ttumDeneme> {
                   height: 45,
                   color: Color(0xFF416BA9),
                   child: Row(
-                    children: [
+                    children:const [
                       SizedBox(width: 10.0,),
                       Icon(Icons.list_alt,color: Colors.white,),
                       SizedBox(width: 20.0,),
@@ -377,7 +377,7 @@ class _ttumDenemeState extends State<ttumDeneme> {
                 ),
               ),
               Container(
-                decoration: BoxDecoration(
+                decoration: const BoxDecoration(
                   color: Color(0xFF416BA9),
                   border: Border(
                     bottom: BorderSide(
@@ -391,7 +391,7 @@ class _ttumDenemeState extends State<ttumDeneme> {
                   height: 45,
                   color: Color(0xFF416BA9),
                   child: Row(
-                    children: [
+                    children: const [
                       SizedBox(width: 10.0,),
                       Icon(Icons.list_alt,color: Colors.white,),
                       SizedBox(width: 20.0,),
@@ -411,7 +411,7 @@ class _ttumDenemeState extends State<ttumDeneme> {
       appBar: AppBar(
         title: Column(
           children: const [
-             Text("Aktif Varlıklar"),
+            Text("Aktif Varlıklar"),
             Text(
               "Finans Analizi",
               style: TextStyle(
@@ -443,7 +443,6 @@ class _ttumDenemeState extends State<ttumDeneme> {
               padding: EdgeInsets.all(8),
               itemCount: 12,
               itemBuilder: (BuildContext context, int index) {
-                var asdf;
                 return  Card(
                     //kod dışarı taşmasın clip.antialias
                     clipBehavior: Clip.antiAlias,
@@ -487,9 +486,9 @@ class _ttumDenemeState extends State<ttumDeneme> {
                             height: yukseklik*0.12,
                           ),
                         ),
-                        Expanded(
+                        const Expanded(
                             flex: 1,
-                            child: const Icon(
+                            child: Icon(
                               Icons.map,
                               size: 20,
                               color:  Colors.white,)

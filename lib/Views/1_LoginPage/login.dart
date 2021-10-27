@@ -1,3 +1,4 @@
+import 'package:email_validator/email_validator.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_signin_button/flutter_signin_button.dart';
@@ -57,7 +58,7 @@ class _loginState extends State<login> {
             Padding(
               padding: const EdgeInsets.only(top: 20.0),
               child: Container(
-                height: yukseklik * 0.55,
+                height: yukseklik * 0.75,
                 color: Colors.redAccent,
                 child: Form(
                   key: _signInFormKey,
@@ -72,8 +73,8 @@ class _loginState extends State<login> {
                       Padding(
                         padding: const EdgeInsets.symmetric(horizontal: 48.0),
                         child: TextFormField(
-                          validator: (val) {
-                            if (!val!.contains("@")) {
+                          validator: (value) {
+                            if (!EmailValidator.validate(value!)) {
                               return "E-mail boş bırakılamaz";
                             } else {
                               return null;
@@ -111,10 +112,10 @@ class _loginState extends State<login> {
                         padding: const EdgeInsets.symmetric(horizontal: 48.0),
                         child: TextFormField(
                           validator: (val){
-                            if(val!.length==6){
-
+                            if(val!.length<6){
+                              return "Şifreniz en az 6 karakter olmalıdır";
                             }else{
-                              
+                              return null;
                             }
                           },
                           style: const TextStyle(color: Colors.white),

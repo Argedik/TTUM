@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:firebase_core/firebase_core.dart';
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:provider/provider.dart';
+import 'package:ttum/Dao/auth.dart';
+import 'package:ttum/Views/1_LoginPage/on_board.dart';
 
 import 'Views/1_LoginPage/login.dart';
 
@@ -20,26 +21,30 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      debugShowCheckedModeBanner: false,
-      title: 'Flutter Demo',
-      theme: ThemeData(
-        primarySwatch: Colors.blue,
-      ),
-      home:FutureBuilder(
-        future: _initialization,
-        builder: (BuildContext context, AsyncSnapshot<dynamic> snapshot) {
-          if (snapshot.hasError) {
-            return const Center(child:Text("Beklenilmeyen bir hata oluştu."));
-          }else if(snapshot.hasData){
-            return const login();
-          }else{
-            return const Center(child: CircularProgressIndicator(),);
+    return Provider<Auth>(
+      create: (context)=>Auth(),
+      child: MaterialApp(
+        debugShowCheckedModeBanner: false,
+        title: 'Flutter Demo',
+        theme: ThemeData(
+          primarySwatch: Colors.blue,
+        ),
+        home:FutureBuilder(
+          future: _initialization,
+          builder: (BuildContext context, AsyncSnapshot<dynamic> snapshot) {
+            if (snapshot.hasError) {
+              return const Center(child:Text("Beklenilmeyen bir hata oluştu."));
+            }else if(snapshot.hasData){
+              return const OnBoardWidget();
+              // return const login();
+            }else{
+              return const Center(child: CircularProgressIndicator(),);
+            }
           }
-        }
-      )
+        )
 
-      //const login(),
+        //const login(),
+      ),
     );
   }
 }

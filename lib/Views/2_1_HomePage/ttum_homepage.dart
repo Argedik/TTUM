@@ -27,7 +27,7 @@ class _ttumDenemeState extends State<ttumDeneme> {
             children: [
               Container(
                 height: 80,
-                child: DrawerHeader(
+                child: const DrawerHeader(
                   margin: EdgeInsets.all(0.0),
                   padding: EdgeInsets.all(0.0),
                   child: Center(
@@ -531,7 +531,7 @@ class _ttumDenemeState extends State<ttumDeneme> {
           IconButton(
             onPressed: () async {
               Provider.of<Auth>(context,listen: false).signOut();
-              Navigator.push(context, MaterialPageRoute(builder: (context)=>const login(),));
+              Navigator.push(context, MaterialPageRoute(builder: (context)=>const Login(),));
             },
             icon: const Icon(
               Icons.logout,

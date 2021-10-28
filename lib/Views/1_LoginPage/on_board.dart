@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:ttum/Dao/auth.dart';
 import 'package:ttum/Views/1_LoginPage/login.dart';
+import 'package:ttum/Views/1_LoginPage/uygulamalar.dart';
 import 'package:ttum/Views/2_1_HomePage/ttum_homepage.dart';
 
 class OnBoardWidget extends StatefulWidget {
@@ -38,7 +39,7 @@ class _OnBoardWidgetState extends State<OnBoardWidget> {
         stream: _auth.authStatus(),
         builder: (BuildContext context, AsyncSnapshot<dynamic> snapshot) {
           if (snapshot.connectionState == ConnectionState.active) {
-            return snapshot.data!= null ? ttumDeneme() : login();
+            return snapshot.data!= null ? const ttumDeneme() : const Uygulamalar();
           } else {
             return const SizedBox(
               height: 100,

@@ -5,14 +5,14 @@ import 'package:provider/provider.dart';
 import 'package:ttum/Dao/auth.dart';
 import 'package:ttum/Views/1_LoginPage/login.dart';
 
-class ttumDeneme extends StatefulWidget {
-  const ttumDeneme({Key? key}) : super(key: key);
+class TtumDeneme extends StatefulWidget {
+  const TtumDeneme({Key? key}) : super(key: key);
 
   @override
-  _ttumDenemeState createState() => _ttumDenemeState();
+  _TtumDenemeState createState() => _TtumDenemeState();
 }
 
-class _ttumDenemeState extends State<ttumDeneme> {
+class _TtumDenemeState extends State<TtumDeneme> {
   @override
   Widget build(BuildContext context) {
 

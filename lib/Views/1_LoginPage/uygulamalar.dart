@@ -42,7 +42,7 @@ class _UygulamalarState extends State<Uygulamalar> {
                 child: const Center(child: Text("Barkod denemesi")),
               ),
             ),
-            SizedBox(height: 20.0,),
+            const SizedBox(height: 20.0,),
             GestureDetector(
               onTap: () {
                 Navigator.push(context,

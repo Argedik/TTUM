@@ -6,6 +6,7 @@ import 'package:provider/provider.dart';
 import 'package:ttum/Dao/auth.dart';
 import 'package:ttum/Models/buttons.dart';
 import 'package:ttum/Views/1_LoginPage/register.dart';
+import 'package:ttum/Views/1_LoginPage/reset_password.dart';
 import 'package:ttum/Views/2_1_HomePage/ttum_homepage.dart';
 import 'package:ttum/Views/2_HomePage/product_definition.dart';
 
@@ -18,6 +19,8 @@ class Login extends StatefulWidget {
 
 class _LoginState extends State<Login> {
   final _signInFormKey = GlobalKey<FormState>();
+  TextEditingController _emailController = TextEditingController();
+  TextEditingController _passwordController = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
@@ -35,17 +38,17 @@ class _LoginState extends State<Login> {
       Navigator.push(
           context,
           MaterialPageRoute(
-            builder: (context) => const ttumDeneme(),
+            builder: (context) => const TtumDeneme(),
           ));
     }
 
-    void _showButtonPressDialog(BuildContext context, String provider) {
+    /*void _showButtonPressDialog(BuildContext context, String provider) {
       ScaffoldMessenger.of(context).showSnackBar(SnackBar(
         content: Text('$provider butonu basıldı!'),
         backgroundColor: Colors.black26,
         duration: const Duration(milliseconds: 500),
       ));
-    }
+    }*/
 
     return Scaffold(
       appBar: AppBar(
@@ -69,6 +72,7 @@ class _LoginState extends State<Login> {
                     Padding(
                       padding: const EdgeInsets.symmetric(horizontal: 48.0),
                       child: TextFormField(
+                        controller: _emailController,
                         validator: (value) {
                           if (value!.isEmpty) {
                             return "E-mail boş bırakılamaz";
@@ -103,7 +107,7 @@ class _LoginState extends State<Login> {
                             ),
                           ),
                           border: OutlineInputBorder(
-                            borderRadius: BorderRadius.circular(22.0),
+                            borderRadius: BorderRadius.circular(25.0),
                           ),
                         ),
                       ),
@@ -112,6 +116,7 @@ class _LoginState extends State<Login> {
                     Padding(
                       padding: const EdgeInsets.symmetric(horizontal: 48.0),
                       child: TextFormField(
+                        controller: _passwordController,
                         validator: (val) {
                           if (val!.length < 6) {
                             return "Şifreniz en az 6 karakter olmalıdır";
@@ -133,16 +138,25 @@ class _LoginState extends State<Login> {
                             ),
                           ),
                           border: OutlineInputBorder(
-                            borderRadius: BorderRadius.circular(22.0),
+                            borderRadius: BorderRadius.circular(25.0),
                           ),
                         ),
                       ),
                     ),
                     const SizedBox(height: 10),
                     InkWell(
-                      onTap: () {
-                        if (!_signInFormKey.currentState!.validate()) {
-                          return;
+                      onTap: () async {
+                        if (_signInFormKey.currentState!.validate()) {
+                          final user =
+                              await Provider.of<Auth>(context, listen: false)
+                                  .signInWithEmailAndPassword(
+                                      _emailController.text,
+                                      _passwordController.text);
+                          if (user != null && !user.emailVerified) {
+                            await _showMyDialog();
+                            await Provider.of<Auth>(context, listen: false)
+                                .signOut();
+                          }
                         }
                       },
                       child: Container(
@@ -151,12 +165,12 @@ class _LoginState extends State<Login> {
                           boxShadow: const [
                             BoxShadow(
                               offset: Offset(0.0, 20.0),
-                              blurRadius: 30.0,
+                              blurRadius: 15.0,
                               color: Colors.black12,
                             )
                           ],
                           color: Colors.white,
-                          borderRadius: BorderRadius.circular(22.0),
+                          borderRadius: BorderRadius.circular(25.0),
                         ),
                         child: Row(
                           children: [
@@ -201,12 +215,12 @@ class _LoginState extends State<Login> {
                           boxShadow: const [
                             BoxShadow(
                               offset: Offset(0.0, 20.0),
-                              blurRadius: 30.0,
+                              blurRadius: 15.0,
                               color: Colors.black12,
                             )
                           ],
                           color: Colors.white,
-                          borderRadius: BorderRadius.circular(22.0),
+                          borderRadius: BorderRadius.circular(25.0),
                         ),
                         child: Row(
                           children: [
@@ -243,26 +257,35 @@ class _LoginState extends State<Login> {
                     const SizedBox(
                       height: 20.0,
                     ),
-                    ClipRRect(
-                      borderRadius: BorderRadius.circular(12),
-                      child: Stack(
-                        children: <Widget>[
-                          Positioned.fill(
-                            child: Container(
-                              decoration: const BoxDecoration(
-                                gradient: LinearGradient(
-                                  colors: <Color>[
-                                    Color(0xFF416BA9),
-                                    Color(0xFF468FD4),
-                                    Color(0xFF416BA9),
-                                    Color(0xFF468FD4),
-                                    Color(0xFF416BA9),
-                                  ],
+                    Stack(
+                      children: <Widget>[
+                        Positioned.fill(
+                          child: Container(
+                            decoration: const BoxDecoration(
+                              borderRadius: BorderRadius.all(Radius.circular(25.0)),
+                              boxShadow: [
+                                BoxShadow(
+                                  color: Colors.black12,
+                                  blurRadius: 15.0,
+                                  offset: Offset(0.0, 20.0),
                                 ),
+                              ],
+                              gradient: LinearGradient(
+                                colors: <Color>[
+                                  Color(0xFF416BA9),
+                                  Color(0xFF468FD4),
+                                  Color(0xFF416BA9),
+                                  Color(0xFF468FD4),
+                                  Color(0xFF416BA9),
+                                ],
                               ),
                             ),
                           ),
-                          TextButton(
+                        ),
+                        SizedBox(
+                          height: 50.0,
+                          width: 180.0,
+                          child: TextButton(
                             style: TextButton.styleFrom(
                               padding: const EdgeInsets.all(16.0),
                               primary: Colors.white,
@@ -272,14 +295,68 @@ class _LoginState extends State<Login> {
                               Navigator.push(
                                   context,
                                   MaterialPageRoute(
-                                      builder: (context) =>
-                                          Register()));
+                                      builder: (context) => const Register()));
                             },
-                            child: const Text('Yeni Kayıt için tıklayınız',
-                              style: TextStyle(fontSize: 15,fontWeight: FontWeight.w500),),
+                            child: const Text(
+                              'Yeni Kayıt İçin Tıklayınız',
+                              maxLines: 1,
+                              style: TextStyle(
+                                  fontSize: 13, fontWeight: FontWeight.w500),
+                            ),
                           ),
-                        ],
-                      ),
+                        ),
+                      ],
+                    ),
+                    const SizedBox(height: 20.0),
+                    Stack(
+                      children: <Widget>[
+                        Positioned.fill(
+                          child: Container(
+                            width: 122,
+                            decoration: const BoxDecoration(
+                              borderRadius: BorderRadius.all(Radius.circular(25.0)),
+                              boxShadow: [
+                                BoxShadow(
+                                  color: Colors.black12,
+                                  blurRadius: 15.0,
+                                  offset: Offset(0.0, 20.0),
+                                ),
+                              ],
+                              gradient: LinearGradient(
+                                colors: <Color>[
+                                  Color(0xFF416BA9),
+                                  Color(0xFF468FD4),
+                                  Color(0xFF416BA9),
+                                  Color(0xFF468FD4),
+                                  Color(0xFF416BA9),
+                                ],
+                              ),
+                            ),
+                          ),
+                        ),
+                        TextButton(
+                          style: TextButton.styleFrom(
+                            padding: const EdgeInsets.all(16.0),
+                            primary: Colors.white,
+                            textStyle: const TextStyle(fontSize: 20),
+                            elevation: 55,
+                            shadowColor: Colors.black,
+                          ),
+                          onPressed: () {
+                            Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                    builder: (context) => const ResetPassword()));
+                          },
+                          child: const Text(
+                            'Şifremi Unuttum',
+                            style: TextStyle(
+                              fontSize: 13,
+                              fontWeight: FontWeight.w500,
+                            ),
+                          ),
+                        ),
+                      ],
                     ),
                   ],
                 ),
@@ -305,6 +382,34 @@ class _LoginState extends State<Login> {
           ],
         ),
       ),
+    );
+  }
+
+  Future<void> _showMyDialog() async {
+    return showDialog<void>(
+      context: context,
+      barrierDismissible: false, // user must tap button!
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: const Text('Onay gerekiyor'),
+          content: SingleChildScrollView(
+            child: ListBody(
+              children: const <Widget>[
+                Text('Lütfen mailinizi kontrol ediniz.'),
+                Text('Onay linkini tıklayıp tekrar giriş yapmalısınız.'),
+              ],
+            ),
+          ),
+          actions: <Widget>[
+            TextButton(
+              child: const Text('Anladım'),
+              onPressed: () {
+                Navigator.of(context).pop();
+              },
+            ),
+          ],
+        );
+      },
     );
   }
 }

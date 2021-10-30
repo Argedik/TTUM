@@ -1,31 +1,19 @@
 import 'package:email_validator/email_validator.dart';
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:ttum/Dao/auth.dart';
 import 'package:ttum/Views/1_LoginPage/login.dart';
 
-class Register extends StatefulWidget {
-  const Register({Key? key}) : super(key: key);
+class ResetPassword extends StatefulWidget {
+  const ResetPassword({Key? key}) : super(key: key);
 
   @override
-  _RegisterState createState() => _RegisterState();
+  _ResetPasswordState createState() => _ResetPasswordState();
 }
 
-class _RegisterState extends State<Register> {
-  final _register = GlobalKey<FormState>();
-
+class _ResetPasswordState extends State<ResetPassword> {
+  final _resetFormKey = GlobalKey<FormState>();
   TextEditingController _emailController = TextEditingController();
-  TextEditingController _passwordController = TextEditingController();
-  TextEditingController _passwordCorfirmController = TextEditingController();
-
-  void _showButtonPressDialog(BuildContext context, String provider) {
-    ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-      content: Text('$provider adresine onay maili gönderilmiştir.'),
-      backgroundColor: Colors.black26,
-      duration: const Duration(milliseconds: 900),
-    ));
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -39,12 +27,12 @@ class _RegisterState extends State<Register> {
             Padding(
               padding: const EdgeInsets.only(top: 20.0),
               child: Form(
-                key: _register,
+                key: _resetFormKey,
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
                     const Text(
-                      "Kayıt Formu",
+                      "Şifre Sıfırlama",
                       style: TextStyle(fontSize: 25),
                     ),
                     const SizedBox(height: 10),
@@ -92,92 +80,22 @@ class _RegisterState extends State<Register> {
                       ),
                     ),
                     const SizedBox(height: 10),
-                    Padding(
-                      padding: const EdgeInsets.symmetric(horizontal: 48.0),
-                      child: TextFormField(
-                        controller: _passwordController,
-                        validator: (val) {
-                          if (val!.length < 6) {
-                            return "Şifreniz en az 6 karakter olmalıdır";
-                          } else {
-                            return null;
-                          }
-                        },
-                        style: const TextStyle(color: Colors.black87),
-                        obscureText: true,
-                        keyboardType: TextInputType.emailAddress,
-                        decoration: InputDecoration(
-                          prefixIcon: const Icon(Icons.lock),
-                          hintText: "Şifre",
-                          enabledBorder: OutlineInputBorder(
-                            borderRadius: BorderRadius.circular(25.0),
-                            borderSide: const BorderSide(
-                              color: Colors.black26,
-                              width: 2.0,
-                            ),
-                          ),
-                          border: OutlineInputBorder(
-                            borderRadius: BorderRadius.circular(22.0),
-                          ),
-                        ),
-                      ),
-                    ),
-                    const SizedBox(height: 10),
-                    Padding(
-                      padding: const EdgeInsets.symmetric(horizontal: 48.0),
-                      child: TextFormField(
-                        controller: _passwordCorfirmController,
-                        validator: (val) {
-                          if (val!.length < 6) {
-                            return "Şifreniz en az 6 karakter olmalıdır";
-                          } else if (val != _passwordController.text) {
-                            _showButtonPressDialog(
-                                context,
-                                _emailController.text.substring(
-                                    0, _emailController.text.indexOf("@")));
-                            return "Şifreleriniz aynı olmalıdır";
-                          } else {
-                            return null;
-                          }
-                        },
-                        style: const TextStyle(color: Colors.black87),
-                        obscureText: true,
-                        keyboardType: TextInputType.emailAddress,
-                        decoration: InputDecoration(
-                          prefixIcon: const Icon(Icons.lock),
-                          hintText: "Şifre Tekrarı",
-                          enabledBorder: OutlineInputBorder(
-                            borderRadius: BorderRadius.circular(25.0),
-                            borderSide: const BorderSide(
-                              color: Colors.black26,
-                              width: 2.0,
-                            ),
-                          ),
-                          border: OutlineInputBorder(
-                            borderRadius: BorderRadius.circular(22.0),
-                          ),
-                        ),
-                      ),
-                    ),
-                    const SizedBox(height: 10),
                     InkWell(
                       onTap: () async {
-                        if (_register.currentState!.validate()) {
-                          final user =
+                        if (_resetFormKey.currentState!.validate()) {
+                          await Provider.of<Auth>(context,listen: false).sendPasswordResetEmail(_emailController.text);
+                          /*final user =
                               await Provider.of<Auth>(context, listen: false)
                                   .createUserWithEmailAndPassword(
                                       _emailController.text,
-                                      _passwordController.text);
-                          if (user != null && !user.emailVerified) {
-                            await user.sendEmailVerification();
-                          }
-                          /*await Future.delayed(Duration(seconds: 60));
-                          await FirebaseAuth.instance.currentUser!.reload();
-                          print("60 sn ${FirebaseAuth.instance.currentUser!.emailVerified}");*/
+                                      _passwordController.text);*/
                           await _showMyDialog();
-                          await Provider.of<Auth>(context,listen: false).signOut();
+
                           setState(() {
-                            Navigator.push(context,MaterialPageRoute(builder: (context)=>const Login()));
+                            Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                    builder: (context) => const Login()));
                           });
                         }
                       },
@@ -202,7 +120,7 @@ class _RegisterState extends State<Register> {
                               padding: const EdgeInsets.symmetric(
                                   vertical: 12.0, horizontal: 14.0),
                               child: Text(
-                                "Kayıt",
+                                "Gönder",
                                 style: Theme.of(context)
                                     .textTheme
                                     .button!
@@ -235,8 +153,6 @@ class _RegisterState extends State<Register> {
       ),
     );
   }
-
-
 
   Future<void> _showMyDialog() async {
     return showDialog<void>(

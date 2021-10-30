@@ -39,7 +39,7 @@ class _OnBoardWidgetState extends State<OnBoardWidget> {
         stream: _auth.authStatus(),
         builder: (BuildContext context, AsyncSnapshot<dynamic> snapshot) {
           if (snapshot.connectionState == ConnectionState.active) {
-            return snapshot.data!= null ? const TtumDeneme() : const Uygulamalar();
+            return snapshot.data!= null ? const Ttum() : const Uygulamalar();
           } else {
             return const SizedBox(
               height: 100,

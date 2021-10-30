@@ -1,14 +1,11 @@
 import 'package:email_validator/email_validator.dart';
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_signin_button/flutter_signin_button.dart';
 import 'package:provider/provider.dart';
 import 'package:ttum/Dao/auth.dart';
 import 'package:ttum/Models/buttons.dart';
 import 'package:ttum/Views/1_LoginPage/register.dart';
 import 'package:ttum/Views/1_LoginPage/reset_password.dart';
 import 'package:ttum/Views/2_1_HomePage/ttum_homepage.dart';
-import 'package:ttum/Views/2_HomePage/product_definition.dart';
 
 class Login extends StatefulWidget {
   const Login({Key? key}) : super(key: key);
@@ -19,8 +16,16 @@ class Login extends StatefulWidget {
 
 class _LoginState extends State<Login> {
   final _signInFormKey = GlobalKey<FormState>();
-  TextEditingController _emailController = TextEditingController();
-  TextEditingController _passwordController = TextEditingController();
+  final TextEditingController _emailController = TextEditingController();
+  final TextEditingController _passwordController = TextEditingController();
+
+  bool buttonPressed = false;
+
+  /*void _letsPress() {
+    setState(() {
+      buttonPressed = true;
+    });
+  }*/
 
   @override
   Widget build(BuildContext context) {
@@ -33,13 +38,36 @@ class _LoginState extends State<Login> {
           await Provider.of<Auth>(context, listen: false).signInAnonymously();
       setState(() {
         _isLoading = false;
-      });
-      print(user!.uid);
-      Navigator.push(
+        Navigator.pushReplacement(
           context,
           MaterialPageRoute(
-            builder: (context) => const TtumDeneme(),
-          ));
+            builder: (context) => const Ttum(),
+          ),
+        );
+      });
+
+      print(user!.uid);
+    }
+
+    Future<void> _signInWithGoogle() async {
+      setState(() {
+        buttonPressed = true;
+        _isLoading = true;
+      });
+      final user =
+      await Provider.of<Auth>(context, listen: false).signInWithGoogle();
+      setState(() {
+        buttonPressed = false;
+        _isLoading = false;
+        Navigator.pushReplacement(
+          context,
+          MaterialPageRoute(
+            builder: (context) => const Ttum(),
+          ),
+        );
+      });
+
+      print(user!.uid);
     }
 
     /*void _showButtonPressDialog(BuildContext context, String provider) {
@@ -52,7 +80,7 @@ class _LoginState extends State<Login> {
 
     return Scaffold(
       appBar: AppBar(
-        title: Text("Patron Uygulaması"),
+        title: const Text("Patron Uygulaması"),
       ),
       body: SingleChildScrollView(
         child: Column(
@@ -152,6 +180,10 @@ class _LoginState extends State<Login> {
                                   .signInWithEmailAndPassword(
                                       _emailController.text,
                                       _passwordController.text);
+                          Navigator.pushReplacement(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (context) => const Ttum()));
                           if (user != null && !user.emailVerified) {
                             await _showMyDialog();
                             await Provider.of<Auth>(context, listen: false)
@@ -262,7 +294,8 @@ class _LoginState extends State<Login> {
                         Positioned.fill(
                           child: Container(
                             decoration: const BoxDecoration(
-                              borderRadius: BorderRadius.all(Radius.circular(25.0)),
+                              borderRadius:
+                                  BorderRadius.all(Radius.circular(25.0)),
                               boxShadow: [
                                 BoxShadow(
                                   color: Colors.black12,
@@ -314,7 +347,8 @@ class _LoginState extends State<Login> {
                           child: Container(
                             width: 122,
                             decoration: const BoxDecoration(
-                              borderRadius: BorderRadius.all(Radius.circular(25.0)),
+                              borderRadius:
+                                  BorderRadius.all(Radius.circular(25.0)),
                               boxShadow: [
                                 BoxShadow(
                                   color: Colors.black12,
@@ -346,7 +380,8 @@ class _LoginState extends State<Login> {
                             Navigator.push(
                                 context,
                                 MaterialPageRoute(
-                                    builder: (context) => const ResetPassword()));
+                                    builder: (context) =>
+                                        const ResetPassword()));
                           },
                           child: const Text(
                             'Şifremi Unuttum',
@@ -357,6 +392,17 @@ class _LoginState extends State<Login> {
                           ),
                         ),
                       ],
+                    ),
+                    const SizedBox(
+                      height: 20.0,
+                    ),
+                    GestureDetector(
+                      onTap:  _isLoading ? null : _signInWithGoogle,
+                      child: buttonPressed
+                          ? ButtonTapped(
+                              icon: "assets/icons/Google_G_Logo.svg.png")
+                          : MyButton(
+                              icon: "assets/icons/Google_G_Logo.svg.png"),
                     ),
                   ],
                 ),

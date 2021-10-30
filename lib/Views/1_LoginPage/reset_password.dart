@@ -160,12 +160,12 @@ class _ResetPasswordState extends State<ResetPassword> {
       barrierDismissible: false, // user must tap button!
       builder: (BuildContext context) {
         return AlertDialog(
-          title: const Text('Onay gerekiyor'),
+          title: const Text('Şifre Yenileme'),
           content: SingleChildScrollView(
             child: ListBody(
               children: const <Widget>[
                 Text('Lütfen mailinizi kontrol ediniz.'),
-                Text('Onay linkini tıklayıp tekrar giriş yapmalısınız.'),
+                Text('Maildeki linkinizi tıklayarak şifrenizi yenileyiniz.'),
               ],
             ),
           ),

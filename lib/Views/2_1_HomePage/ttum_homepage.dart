@@ -5,14 +5,14 @@ import 'package:provider/provider.dart';
 import 'package:ttum/Dao/auth.dart';
 import 'package:ttum/Views/1_LoginPage/login.dart';
 
-class TtumDeneme extends StatefulWidget {
-  const TtumDeneme({Key? key}) : super(key: key);
+class Ttum extends StatefulWidget {
+  const Ttum({Key? key}) : super(key: key);
 
   @override
-  _TtumDenemeState createState() => _TtumDenemeState();
+  _TtumState createState() => _TtumState();
 }
 
-class _TtumDenemeState extends State<TtumDeneme> {
+class _TtumState extends State<Ttum> {
   @override
   Widget build(BuildContext context) {
 
@@ -531,7 +531,7 @@ class _TtumDenemeState extends State<TtumDeneme> {
           IconButton(
             onPressed: () async {
               Provider.of<Auth>(context,listen: false).signOut();
-              Navigator.push(context, MaterialPageRoute(builder: (context)=>const Login(),));
+              Navigator.pushReplacement(context, MaterialPageRoute(builder: (context)=>const Login(),));
             },
             icon: const Icon(
               Icons.logout,

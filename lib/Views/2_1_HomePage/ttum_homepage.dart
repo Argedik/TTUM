@@ -1,7 +1,8 @@
-import 'package:firebase_auth/firebase_auth.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:ttum/Core/dimensions.dart';
 import 'package:ttum/Dao/auth.dart';
 import 'package:ttum/Views/1_LoginPage/login.dart';
 
@@ -13,10 +14,14 @@ class Ttum extends StatefulWidget {
 }
 
 class _TtumState extends State<Ttum> {
+
+  final FirebaseFirestore _database=FirebaseFirestore.instance;
+
+
   @override
   Widget build(BuildContext context) {
-
-    double genislik = MediaQuery.of(context).size.width;
+    final CollectionReference  kitaplarRef = _database.collection("Cari Tanımları");
+    // double genislik = MediaQuery.of(context).size.width;
     double yukseklik = MediaQuery.of(context).size.height;
     return Scaffold(
       drawer: Drawer(
@@ -25,9 +30,9 @@ class _TtumState extends State<Ttum> {
           child: ListView(
             padding: EdgeInsets.zero,
             children: [
-              Container(
+              const SizedBox(
                 height: 80,
-                child: const DrawerHeader(
+                child: DrawerHeader(
                   margin: EdgeInsets.all(0.0),
                   padding: EdgeInsets.all(0.0),
                   child: Center(
@@ -39,489 +44,84 @@ class _TtumState extends State<Ttum> {
                   decoration: BoxDecoration(color: Colors.blueAccent),
                 ),
               ),
-              Container(
-                decoration: BoxDecoration(
-                  color: Color(0xFF416BA9),
-                  border: Border(
-                    bottom: BorderSide(
-                        width: 4.0,
-                        style: BorderStyle.solid,
-                        color: Colors.blueAccent),
+              buildContainer(
+                  icon: const Icon(
+                    Icons.dashboard,
+                    color: Colors.white,
                   ),
-                ),
-                child: Container(
-                  height: 45,
-                  color: Color(0xFF416BA9),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.start,
-                    children: [
-                      SizedBox(
-                        width: 10.0,
-                      ),
-                      Icon(
-                        Icons.dashboard,
-                        color: Colors.white,
-                      ),
-                      SizedBox(
-                        width: 20.0,
-                      ),
-                      Text(
-                        "DASHBOARD",
-                        style: TextStyle(
-                            fontSize: 12,
-                            color: Colors.white,
-                            fontWeight: FontWeight.w500),
-                      ),
-                      SizedBox(
-                        width: 150.0,
-                      ),
-                      Icon(
-                        Icons.arrow_forward_ios_rounded,
-                        color: Colors.white,
-                      ),
-                    ],
+                  title: "DASHBOARD"),
+              buildContainer(
+                  icon: const Icon(
+                    Icons.list_alt,
+                    color: Colors.white,
                   ),
-                ),
-              ),
-              Container(
-                decoration: BoxDecoration(
-                  color: Color(0xFF416BA9),
-                  border: Border(
-                    bottom: BorderSide(
-                        width: 4.0,
-                        style: BorderStyle.solid,
-                        color: Colors.blueAccent),
+                  title: "FIRSAT"),
+              buildContainer(
+                  icon: const Icon(
+                    Icons.list_alt,
+                    color: Colors.white,
                   ),
-                ),
-                child: Container(
-                  height: 45,
-                  color: Color(0xFF416BA9),
-                  child: Row(
-                    children: [
-                      SizedBox(
-                        width: 10.0,
-                      ),
-                      Icon(
-                        Icons.list_alt,
-                        color: Colors.white,
-                      ),
-                      SizedBox(
-                        width: 20.0,
-                      ),
-                      Text(
-                        "FIRSAT",
-                        style: TextStyle(
-                            fontSize: 12,
-                            color: Colors.white,
-                            fontWeight: FontWeight.w500),
-                      ),
-                      SizedBox(
-                        width: 180.0,
-                      ),
-                      Icon(
-                        Icons.arrow_forward_ios_rounded,
-                        color: Colors.white,
-                      ),
-                    ],
+                  title: "AKTİVİTE"),
+              buildContainer(
+                  icon: const Icon(
+                    Icons.list_alt,
+                    color: Colors.white,
                   ),
-                ),
-              ),
-              Container(
-                decoration: BoxDecoration(
-                  color: Color(0xFF416BA9),
-                  border: Border(
-                    bottom: BorderSide(
-                        width: 4.0,
-                        style: BorderStyle.solid,
-                        color: Colors.blueAccent),
+                  title: "TEKLİF"),
+              buildContainer(
+                  icon: const Icon(
+                    Icons.list_alt,
+                    color: Colors.white,
                   ),
-                ),
-                child: Container(
-                  height: 45,
-                  color: Color(0xFF416BA9),
-                  child: Row(
-                    children: [
-                      SizedBox(
-                        width: 10.0,
-                      ),
-                      Icon(
-                        Icons.list_alt,
-                        color: Colors.white,
-                      ),
-                      SizedBox(
-                        width: 20.0,
-                      ),
-                      Text(
-                        "AKTİVİTE",
-                        style: TextStyle(
-                            fontSize: 12,
-                            color: Colors.white,
-                            fontWeight: FontWeight.w500),
-                      ),
-                    ],
+                  title: "SİPARİŞ"),
+              buildContainer(
+                  icon: const Icon(
+                    Icons.list_alt,
+                    color: Colors.white,
                   ),
-                ),
-              ),
-              Container(
-                decoration: BoxDecoration(
-                  color: Color(0xFF416BA9),
-                  border: Border(
-                    bottom: BorderSide(
-                        width: 4.0,
-                        style: BorderStyle.solid,
-                        color: Colors.blueAccent),
+                  title: "İRSALİYE"),
+              buildContainer(
+                  icon: const Icon(
+                    Icons.list_alt,
+                    color: Colors.white,
                   ),
-                ),
-                child: Container(
-                  height: 45,
-                  color: Color(0xFF416BA9),
-                  child: Row(
-                    children: [
-                      SizedBox(
-                        width: 10.0,
-                      ),
-                      Icon(
-                        Icons.list_alt,
-                        color: Colors.white,
-                      ),
-                      SizedBox(
-                        width: 20.0,
-                      ),
-                      Text(
-                        "TEKLİF",
-                        style: TextStyle(
-                            fontSize: 12,
-                            color: Colors.white,
-                            fontWeight: FontWeight.w500),
-                      ),
-                    ],
+                  title: "FATURA"),
+              buildContainer(
+                  icon: const Icon(
+                    Icons.list_alt,
+                    color: Colors.white,
                   ),
-                ),
-              ),
-              Container(
-                decoration: BoxDecoration(
-                  color: Color(0xFF416BA9),
-                  border: Border(
-                    bottom: BorderSide(
-                        width: 4.0,
-                        style: BorderStyle.solid,
-                        color: Colors.blueAccent),
+                  title: "İNSAN KAYNAKLARI"),
+              buildContainer(
+                  icon: const Icon(
+                    Icons.list_alt,
+                    color: Colors.white,
                   ),
-                ),
-                child: Container(
-                  height: 45,
-                  color: Color(0xFF416BA9),
-                  child: Row(
-                    children: [
-                      SizedBox(
-                        width: 10.0,
-                      ),
-                      Icon(
-                        Icons.list_alt,
-                        color: Colors.white,
-                      ),
-                      SizedBox(
-                        width: 20.0,
-                      ),
-                      Text(
-                        "SİPARİŞ",
-                        style: TextStyle(
-                            fontSize: 12,
-                            color: Colors.white,
-                            fontWeight: FontWeight.w500),
-                      ),
-                    ],
+                  title: "TEKNİK SERVİS"),
+              buildContainer(
+                  icon: const Icon(
+                    Icons.list_alt,
+                    color: Colors.white,
                   ),
-                ),
-              ),
-              Container(
-                decoration: BoxDecoration(
-                  color: Color(0xFF416BA9),
-                  border: Border(
-                    bottom: BorderSide(
-                        width: 4.0,
-                        style: BorderStyle.solid,
-                        color: Colors.blueAccent),
+                  title: "ANALİZ"),
+              buildContainer(
+                  icon: const Icon(
+                    Icons.list_alt,
+                    color: Colors.white,
                   ),
-                ),
-                child: Container(
-                  height: 45,
-                  color: Color(0xFF416BA9),
-                  child: Row(
-                    children: [
-                      SizedBox(
-                        width: 10.0,
-                      ),
-                      Icon(
-                        Icons.list_alt,
-                        color: Colors.white,
-                      ),
-                      SizedBox(
-                        width: 20.0,
-                      ),
-                      Text(
-                        "İRSALİYE",
-                        style: TextStyle(
-                            fontSize: 12,
-                            color: Colors.white,
-                            fontWeight: FontWeight.w500),
-                      ),
-                    ],
+                  title: "FÖYLER"),
+              buildContainer(
+                  icon: const Icon(
+                    Icons.list_alt,
+                    color: Colors.white,
                   ),
-                ),
-              ),
-              Container(
-                decoration: BoxDecoration(
-                  color: Color(0xFF416BA9),
-                  border: Border(
-                    bottom: BorderSide(
-                        width: 4.0,
-                        style: BorderStyle.solid,
-                        color: Colors.blueAccent),
+                  title: "SAYIM"),
+              buildContainer(
+                  icon: const Icon(
+                    Icons.settings,
+                    color: Colors.white,
                   ),
-                ),
-                child: Container(
-                  height: 45,
-                  color: Color(0xFF416BA9),
-                  child: Row(
-                    children: [
-                      SizedBox(
-                        width: 10.0,
-                      ),
-                      Icon(
-                        Icons.list_alt,
-                        color: Colors.white,
-                      ),
-                      SizedBox(
-                        width: 20.0,
-                      ),
-                      Text(
-                        "FATURA",
-                        style: TextStyle(
-                            fontSize: 12,
-                            color: Colors.white,
-                            fontWeight: FontWeight.w500),
-                      ),
-                    ],
-                  ),
-                ),
-              ),
-              Container(
-                decoration: BoxDecoration(
-                  color: Color(0xFF416BA9),
-                  border: Border(
-                    bottom: BorderSide(
-                        width: 4.0,
-                        style: BorderStyle.solid,
-                        color: Colors.blueAccent),
-                  ),
-                ),
-                child: Container(
-                  height: 45,
-                  color: Color(0xFF416BA9),
-                  child: Row(
-                    children: [
-                      SizedBox(
-                        width: 10.0,
-                      ),
-                      Icon(
-                        Icons.list_alt,
-                        color: Colors.white,
-                      ),
-                      SizedBox(
-                        width: 20.0,
-                      ),
-                      Text(
-                        "İNSAN KAYNAKLARI",
-                        style: TextStyle(
-                            fontSize: 12,
-                            color: Colors.white,
-                            fontWeight: FontWeight.w500),
-                      ),
-                    ],
-                  ),
-                ),
-              ),
-              Container(
-                decoration: BoxDecoration(
-                  color: Color(0xFF416BA9),
-                  border: Border(
-                    bottom: BorderSide(
-                        width: 4.0,
-                        style: BorderStyle.solid,
-                        color: Colors.blueAccent),
-                  ),
-                ),
-                child: Container(
-                  height: 45,
-                  color: Color(0xFF416BA9),
-                  child: Row(
-                    children: [
-                      SizedBox(
-                        width: 10.0,
-                      ),
-                      Icon(
-                        Icons.list_alt,
-                        color: Colors.white,
-                      ),
-                      SizedBox(
-                        width: 20.0,
-                      ),
-                      Text(
-                        "TEKNİK SERVİS",
-                        style: TextStyle(
-                            fontSize: 12,
-                            color: Colors.white,
-                            fontWeight: FontWeight.w500),
-                      ),
-                    ],
-                  ),
-                ),
-              ),
-              Container(
-                decoration: BoxDecoration(
-                  color: Color(0xFF416BA9),
-                  border: Border(
-                    bottom: BorderSide(
-                        width: 4.0,
-                        style: BorderStyle.solid,
-                        color: Colors.blueAccent),
-                  ),
-                ),
-                child: Container(
-                  height: 45,
-                  color: Color(0xFF416BA9),
-                  child: Row(
-                    children: [
-                      SizedBox(
-                        width: 10.0,
-                      ),
-                      Icon(
-                        Icons.list_alt,
-                        color: Colors.white,
-                      ),
-                      SizedBox(
-                        width: 20.0,
-                      ),
-                      Text(
-                        "ANALİZ",
-                        style: TextStyle(
-                            fontSize: 12,
-                            color: Colors.white,
-                            fontWeight: FontWeight.w500),
-                      ),
-                    ],
-                  ),
-                ),
-              ),
-              Container(
-                decoration: BoxDecoration(
-                  color: Color(0xFF416BA9),
-                  border: Border(
-                    bottom: BorderSide(
-                        width: 4.0,
-                        style: BorderStyle.solid,
-                        color: Colors.blueAccent),
-                  ),
-                ),
-                child: Container(
-                  height: 45,
-                  color: Color(0xFF416BA9),
-                  child: Row(
-                    children: const [
-                      SizedBox(
-                        width: 10.0,
-                      ),
-                      Icon(
-                        Icons.list_alt,
-                        color: Colors.white,
-                      ),
-                      SizedBox(
-                        width: 20.0,
-                      ),
-                      Text(
-                        "FÖYLER",
-                        style: TextStyle(
-                            fontSize: 12,
-                            color: Colors.white,
-                            fontWeight: FontWeight.w500),
-                      ),
-                    ],
-                  ),
-                ),
-              ),
-              Container(
-                decoration: const BoxDecoration(
-                  color: Color(0xFF416BA9),
-                  border: Border(
-                    bottom: BorderSide(
-                        width: 4.0,
-                        style: BorderStyle.solid,
-                        color: Colors.blueAccent),
-                  ),
-                ),
-                child: Container(
-                  height: 45,
-                  color: Color(0xFF416BA9),
-                  child: Row(
-                    children: const [
-                      SizedBox(
-                        width: 10.0,
-                      ),
-                      Icon(
-                        Icons.list_alt,
-                        color: Colors.white,
-                      ),
-                      SizedBox(
-                        width: 20.0,
-                      ),
-                      Text(
-                        "SAYIM",
-                        style: TextStyle(
-                            fontSize: 12,
-                            color: Colors.white,
-                            fontWeight: FontWeight.w500),
-                      ),
-                    ],
-                  ),
-                ),
-              ),
-              Container(
-                decoration: const BoxDecoration(
-                  color: Color(0xFF416BA9),
-                  border: Border(
-                    bottom: BorderSide(
-                        width: 4.0,
-                        style: BorderStyle.solid,
-                        color: Colors.blueAccent),
-                  ),
-                ),
-                child: Container(
-                  height: 45,
-                  color: Color(0xFF416BA9),
-                  child: Row(
-                    children: const [
-                      SizedBox(
-                        width: 10.0,
-                      ),
-                      Icon(
-                        Icons.list_alt,
-                        color: Colors.white,
-                      ),
-                      SizedBox(
-                        width: 20.0,
-                      ),
-                      Text(
-                        "AYARLAR",
-                        style: TextStyle(
-                            fontSize: 12,
-                            color: Colors.white,
-                            fontWeight: FontWeight.w500),
-                      ),
-                    ],
-                  ),
-                ),
-              ),
+                  title: "AYARLAR"),
             ],
           ),
         ),
@@ -530,8 +130,12 @@ class _TtumState extends State<Ttum> {
         actions: [
           IconButton(
             onPressed: () async {
-              Provider.of<Auth>(context,listen: false).signOut();
-              Navigator.pushReplacement(context, MaterialPageRoute(builder: (context)=>const Login(),));
+              Provider.of<Auth>(context, listen: false).signOut();
+              Navigator.pushReplacement(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => const Login(),
+                  ));
             },
             icon: const Icon(
               Icons.logout,
@@ -568,13 +172,13 @@ class _TtumState extends State<Ttum> {
           //padding: EdgeInsets.only(left: 15.0, right: 15.0),
           child: Center(
             child: ListView.builder(
-              padding: EdgeInsets.all(8),
+              padding: const EdgeInsets.all(edgeInsetsAll),
               itemCount: 12,
               itemBuilder: (BuildContext context, int index) {
                 return Card(
                   //kod dışarı taşmasın clip.antialias
                   clipBehavior: Clip.antiAlias,
-                  margin: EdgeInsets.all(8),
+                  margin: const EdgeInsets.all(edgeInsetsAll),
                   borderOnForeground: true,
                   elevation: 12,
                   shape: RoundedRectangleBorder(
@@ -586,7 +190,8 @@ class _TtumState extends State<Ttum> {
                     children: [
                       Expanded(
                         flex: 3,
-                        child: Container(
+                        child: SizedBox(
+                          height: yukseklik * 0.12,
                           child: Column(
                             mainAxisAlignment: MainAxisAlignment.center,
                             crossAxisAlignment: CrossAxisAlignment.start,
@@ -615,20 +220,65 @@ class _TtumState extends State<Ttum> {
                               ),
                             ],
                           ),
-                          height: yukseklik * 0.12,
                         ),
                       ),
                       const Expanded(
-                          flex: 1,
-                          child: Icon(
-                            Icons.map,
-                            size: 20,
-                            color: Colors.white,
-                          )),
+                        flex: 1,
+                        child: Icon(
+                          Icons.map,
+                          size: 20,
+                          color: Colors.white,
+                        ),
+                      ),
                     ],
                   ),
                 );
               },
+            ),
+          ),
+        ),
+      ),
+    );
+  }
+
+  Container buildContainer({required String title, required Icon icon}) {
+    return Container(
+      decoration: const BoxDecoration(
+        color: Color(0xFF416BA9),
+        border: Border(
+          bottom: BorderSide(
+              width: 4.0, style: BorderStyle.solid, color: Colors.blueAccent),
+        ),
+      ),
+      child: SizedBox(
+        height: 45,
+        child: ListTile(
+          leading: Transform.translate(
+            offset: const Offset(-8, -5),
+            child: icon,
+          ),
+          /*
+              subtitle: Text("Deneme"),
+              // üçüncü satır
+              isThreeLine: true,
+              //ortala
+              dense: true,*/
+          tileColor: Colors.red,
+          title: Transform.translate(
+            offset: const Offset(-16, -5),
+            child: Text(
+              title,
+              style: const TextStyle(
+                  fontSize: 12,
+                  color: Colors.white,
+                  fontWeight: FontWeight.w500),
+            ),
+          ),
+          trailing: Transform.translate(
+            offset: const Offset(8, -5),
+            child: const Icon(
+              Icons.arrow_forward_ios_rounded,
+              color: Colors.white,
             ),
           ),
         ),

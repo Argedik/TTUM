@@ -45,8 +45,6 @@ class _LoginState extends State<Login> {
           ),
         );
       });
-
-      print(user!.uid);
     }
 
     Future<void> _signInWithGoogle() async {
@@ -54,20 +52,26 @@ class _LoginState extends State<Login> {
         buttonPressed = true;
         _isLoading = true;
       });
-      final user =
-      await Provider.of<Auth>(context, listen: false).signInWithGoogle();
+
+      try{
+        final user =
+            await Provider.of<Auth>(context, listen: false).signInWithGoogle();
+
+        if (user?.uid != null) {
+          Navigator.pushReplacement(
+            context,
+            MaterialPageRoute(
+              builder: (context) => const Ttum(),
+            ),
+          );
+        }
+      }catch(hata){
+        print("userid gelmedi hatası $hata");
+      }
       setState(() {
         buttonPressed = false;
         _isLoading = false;
-        Navigator.pushReplacement(
-          context,
-          MaterialPageRoute(
-            builder: (context) => const Ttum(),
-          ),
-        );
       });
-
-      print(user!.uid);
     }
 
     /*void _showButtonPressDialog(BuildContext context, String provider) {
@@ -397,7 +401,7 @@ class _LoginState extends State<Login> {
                       height: 20.0,
                     ),
                     GestureDetector(
-                      onTap:  _isLoading ? null : _signInWithGoogle,
+                      onTap: _isLoading ? null : _signInWithGoogle,
                       child: buttonPressed
                           ? ButtonTapped(
                               icon: "assets/icons/Google_G_Logo.svg.png")

@@ -11,9 +11,16 @@ class Auth {
 
   Future<User?> createUserWithEmailAndPassword(
       String email, String password) async {
-    final userCredentials = await _firebaseAuth.createUserWithEmailAndPassword(
-        email: email, password: password);
-    return userCredentials.user;
+    late UserCredential userCredentials;
+    try {
+      userCredentials = await _firebaseAuth.createUserWithEmailAndPassword(
+          email: email, password: password);
+      return userCredentials.user;
+    } on FirebaseAuthException catch (e) {
+      print(e.code);
+      print(e.message);
+      rethrow;
+    }
   }
 
   Future<User?> signInWithEmailAndPassword(
@@ -23,7 +30,7 @@ class Auth {
     return userCredentials.user;
   }
 
-  Future<void> sendPasswordResetEmail(String email) async{
+  Future<void> sendPasswordResetEmail(String email) async {
     await _firebaseAuth.sendPasswordResetEmail(email: email);
   }
 
@@ -31,22 +38,29 @@ class Auth {
     // Trigger the authentication flow
     final GoogleSignInAccount? googleUser = await GoogleSignIn().signIn();
 
-    // Obtain the auth details from the request
-    final GoogleSignInAuthentication? googleAuth = await googleUser?.authentication;
+    if (googleUser != null) {
+      // Obtain the auth details from the request
+      final GoogleSignInAuthentication? googleAuth =
+          await googleUser.authentication;
 
-    // Create a new credential
-    final credential = GoogleAuthProvider.credential(
-      accessToken: googleAuth?.accessToken,
-      idToken: googleAuth?.idToken,
-    );
+      // Create a new credential
+      final credential = GoogleAuthProvider.credential(
+        accessToken: googleAuth?.accessToken,
+        idToken: googleAuth?.idToken,
+      );
 
-    // Once signed in, return the UserCredential
-    UserCredential userCredential=  await _firebaseAuth.signInWithCredential(credential);
-    return userCredential.user;
+      // Once signed in, return the UserCredential
+      UserCredential userCredential =
+          await _firebaseAuth.signInWithCredential(credential);
+      return userCredential.user;
+    } else {
+      return null;
+    }
   }
 
   Future<User?> signOut() async {
     await _firebaseAuth.signOut();
+    await GoogleSignIn().signOut();
   }
 
   Stream<User?>? authStatus() {

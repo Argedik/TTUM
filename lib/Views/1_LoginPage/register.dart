@@ -162,24 +162,31 @@ class _RegisterState extends State<Register> {
                     const SizedBox(height: 10),
                     InkWell(
                       onTap: () async {
-                        if (_register.currentState!.validate()) {
-                          final user =
-                              await Provider.of<Auth>(context, listen: false)
-                                  .createUserWithEmailAndPassword(
-                                      _emailController.text,
-                                      _passwordController.text);
-                          if (user != null && !user.emailVerified) {
-                            await user.sendEmailVerification();
-                          }
-                          /*await Future.delayed(Duration(seconds: 60));
+                        try{
+                          if (_register.currentState!.validate()) {
+                            final user =
+                                await Provider.of<Auth>(context, listen: false)
+                                    .createUserWithEmailAndPassword(
+                                        _emailController.text,
+                                        _passwordController.text);
+                            if (user != null && !user.emailVerified) {
+                              await user.sendEmailVerification();
+                            }
+                            /*await Future.delayed(Duration(seconds: 60));
                           await FirebaseAuth.instance.currentUser!.reload();
                           print("60 sn ${FirebaseAuth.instance.currentUser!.emailVerified}");*/
-                          await _showMyDialog();
-                          await Provider.of<Auth>(context,listen: false).signOut();
-                          setState(() {
-                            Navigator.push(context,MaterialPageRoute(builder: (context)=>const Login()));
-                          });
+                            await _showMyDialog();
+                            await Provider.of<Auth>(context, listen: false)
+                                .signOut();
+                            setState(() {
+                              Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                      builder: (context) => const Login()));
+                            });
+                          }
                         }
+                        on FirebaseAuthException catch(e){print("hata ${e.message}");}
                       },
                       child: Container(
                         width: 150.0,

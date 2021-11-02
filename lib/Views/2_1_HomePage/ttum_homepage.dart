@@ -5,6 +5,7 @@ import 'package:provider/provider.dart';
 import 'package:ttum/Core/dimensions.dart';
 import 'package:ttum/Dao/auth.dart';
 import 'package:ttum/Views/1_LoginPage/login.dart';
+import 'package:ttum/Views/4_SalesAmount/sales_amount.dart';
 
 class Ttum extends StatefulWidget {
   const Ttum({Key? key}) : super(key: key);
@@ -14,15 +15,17 @@ class Ttum extends StatefulWidget {
 }
 
 class _TtumState extends State<Ttum> {
-
-  final FirebaseFirestore _database=FirebaseFirestore.instance;
-
+  final FirebaseFirestore _database = FirebaseFirestore.instance;
 
   @override
   Widget build(BuildContext context) {
-    final CollectionReference  kitaplarRef = _database.collection("Cari Tanımları");
-    // double genislik = MediaQuery.of(context).size.width;
+    final CollectionReference cariRef = _database.collection("cari_tanimlari");
+
+    final DocumentReference documentRef = cariRef.doc("0V01QRxAYtOGeFw2aLPQ");
+
+    //double genislik = MediaQuery.of(context).size.width;
     double yukseklik = MediaQuery.of(context).size.height;
+
     return Scaffold(
       drawer: Drawer(
         child: Container(
@@ -37,8 +40,8 @@ class _TtumState extends State<Ttum> {
                   padding: EdgeInsets.all(0.0),
                   child: Center(
                     child: Text(
-                      "Tüm Teknoloji Merkezi",
-                      style: TextStyle(color: Colors.white, fontSize: 23),
+                      "Tüm Teknoloji Üretim Merkezi",
+                      style: TextStyle(color: Colors.white, fontSize: 19),
                     ),
                   ),
                   decoration: BoxDecoration(color: Colors.blueAccent),
@@ -156,6 +159,7 @@ class _TtumState extends State<Ttum> {
         ),
         centerTitle: true,
       ),
+
       body: SafeArea(
         child: Container(
           decoration: const BoxDecoration(
@@ -241,44 +245,49 @@ class _TtumState extends State<Ttum> {
     );
   }
 
-  Container buildContainer({required String title, required Icon icon}) {
-    return Container(
-      decoration: const BoxDecoration(
-        color: Color(0xFF416BA9),
-        border: Border(
-          bottom: BorderSide(
-              width: 4.0, style: BorderStyle.solid, color: Colors.blueAccent),
+  GestureDetector buildContainer({required String title, required Icon icon}) {
+    return GestureDetector(
+      onTap: (){
+        Navigator.push(context, MaterialPageRoute(builder: (context)=>salesAmount()));
+      },
+      child: Container(
+        decoration: const BoxDecoration(
+          color: Color(0xFF416BA9),
+          border: Border(
+            bottom: BorderSide(
+                width: 4.0, style: BorderStyle.solid, color: Colors.blueAccent),
+          ),
         ),
-      ),
-      child: SizedBox(
-        height: 45,
-        child: ListTile(
-          leading: Transform.translate(
-            offset: const Offset(-8, -5),
-            child: icon,
-          ),
-          /*
-              subtitle: Text("Deneme"),
-              // üçüncü satır
-              isThreeLine: true,
-              //ortala
-              dense: true,*/
-          tileColor: Colors.red,
-          title: Transform.translate(
-            offset: const Offset(-16, -5),
-            child: Text(
-              title,
-              style: const TextStyle(
-                  fontSize: 12,
-                  color: Colors.white,
-                  fontWeight: FontWeight.w500),
+        child: SizedBox(
+          height: 45,
+          child: ListTile(
+            leading: Transform.translate(
+              offset: const Offset(-8, -5),
+              child: icon,
             ),
-          ),
-          trailing: Transform.translate(
-            offset: const Offset(8, -5),
-            child: const Icon(
-              Icons.arrow_forward_ios_rounded,
-              color: Colors.white,
+            /*
+                subtitle: Text("Deneme"),
+                // üçüncü satır
+                isThreeLine: true,
+                //ortala
+                dense: true,*/
+            tileColor: Colors.red,
+            title: Transform.translate(
+              offset: const Offset(-16, -5),
+              child: Text(
+                title,
+                style: const TextStyle(
+                    fontSize: 12,
+                    color: Colors.white,
+                    fontWeight: FontWeight.w500),
+              ),
+            ),
+            trailing: Transform.translate(
+              offset: const Offset(8, -5),
+              child: const Icon(
+                Icons.arrow_forward_ios_rounded,
+                color: Colors.white,
+              ),
             ),
           ),
         ),

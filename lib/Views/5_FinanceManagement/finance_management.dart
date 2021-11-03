@@ -1,5 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:ttum/Views/4_SalesManagement/add_sales_amount.dart';
+import 'package:ttum/Views/4_SalesManagement/sales_amount.dart';
 
 class financeManagement extends StatefulWidget {
   const financeManagement({Key? key}) : super(key: key);
@@ -10,19 +12,37 @@ class financeManagement extends StatefulWidget {
 
 class _financeManagementState extends State<financeManagement> {
   final FirebaseFirestore _database = FirebaseFirestore.instance;
+
   @override
   Widget build(BuildContext context) {
     final CollectionReference cariRef = _database.collection("cari_tanimlari");
     final DocumentReference documentRef = cariRef.doc("0V01QRxAYtOGeFw2aLPQ");
     return Scaffold(
+      appBar: AppBar(
+        title: Column(
+          children: const [
+            Text("Satış Yönetimi"),
+            Text(
+              "Cariler",
+              style: TextStyle(
+                fontWeight: FontWeight.w300,
+                fontSize: 15,
+              ),
+            ),
+          ],
+        ),
+        centerTitle: true,
+      ),
       body: Column(
         children: [
           ElevatedButton(
             onPressed: () async {
-              DocumentSnapshot documentSnapshot = await documentRef.get();
+              /*DocumentSnapshot documentSnapshot = await documentRef.get();
               Map<String, dynamic>? data2 =
                   documentSnapshot.data() as Map<String, dynamic>?;
-              print(data2!["Ili"]);
+              print(data2!["Ili"]);*/
+              Navigator.push(context,
+                  MaterialPageRoute(builder: (context) => salesAmount()));
             },
             child: Text("data"),
           ),
@@ -50,8 +70,8 @@ class _financeManagementState extends State<financeManagement> {
                           child: ListTile(
                             title: Text(veri["ili"]),
                             subtitle: Text(veri["kayit_tarihi"]),
-                            trailing: Text(veri["ticari_unvan"]),
-                            leading: Text(veri["cari_kodu"]),
+                            trailing: Text(veri["cep_telefonu"]),
+                            leading: Text(veri["ticari_unvan"]),
                             dense: true,
                             isThreeLine: true,
                           ),
@@ -64,6 +84,11 @@ class _financeManagementState extends State<financeManagement> {
             },
           ),
         ],
+      ),
+      floatingActionButton: FloatingActionButton(
+        onPressed: () async {
+          Navigator.push(context,MaterialPageRoute(builder: (context)=>AddSalesAmount()));
+        },child: const Icon(Icons.add),
       ),
     );
   }

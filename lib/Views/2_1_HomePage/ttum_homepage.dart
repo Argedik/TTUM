@@ -5,7 +5,7 @@ import 'package:provider/provider.dart';
 import 'package:ttum/Core/dimensions.dart';
 import 'package:ttum/Dao/auth.dart';
 import 'package:ttum/Views/1_LoginPage/login.dart';
-import 'package:ttum/Views/4_SalesAmount/sales_amount.dart';
+import 'package:ttum/Views/5_FinanceManagement/finance_management.dart';
 
 class Ttum extends StatefulWidget {
   const Ttum({Key? key}) : super(key: key);
@@ -248,7 +248,7 @@ class _TtumState extends State<Ttum> {
   GestureDetector buildContainer({required String title, required Icon icon}) {
     return GestureDetector(
       onTap: (){
-        Navigator.push(context, MaterialPageRoute(builder: (context)=>salesAmount()));
+        Navigator.push(context, MaterialPageRoute(builder: (context)=>financeManagement()));
       },
       child: Container(
         decoration: const BoxDecoration(

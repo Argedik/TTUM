@@ -1,9 +1,19 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:firebase_core/firebase_core.dart';
+import 'package:get/get.dart';
 import 'package:provider/provider.dart';
 import 'package:ttum/Dao/auth.dart';
 import 'package:ttum/Views/1_LoginPage/on_board.dart';
+import 'package:ttum/Views/1_LoginPage/register.dart';
+import 'package:ttum/Views/1_LoginPage/reset_password.dart';
+import 'package:ttum/Views/1_LoginPage/uygulamalar.dart';
+import 'package:ttum/Views/2_1_HomePage/ttum_homepage.dart';
+import 'package:ttum/Views/2_HomePage/product_definition.dart';
+import 'package:ttum/Views/4_SalesManagement/add_sales_amount.dart';
+import 'package:ttum/Views/4_SalesManagement/sales_amount.dart';
+import 'package:ttum/Views/4_SalesManagement/update_sales.dart';
+import 'package:ttum/Views/5_FinanceManagement/finance_management.dart';
 
 import 'Views/1_LoginPage/login.dart';
 
@@ -23,7 +33,7 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return Provider<Auth>(
       create: (context)=>Auth(),
-      child: MaterialApp(
+      child: GetMaterialApp(
         debugShowCheckedModeBanner: false,
         title: 'Flutter Demo',
         theme: ThemeData(
@@ -41,8 +51,20 @@ class MyApp extends StatelessWidget {
               return const Center(child: CircularProgressIndicator(),);
             }
           }
-        )
-        //const login(),
+        ),
+        getPages: [
+          GetPage(name: "/", page: ()=>const OnBoardWidget()),
+          GetPage(name: "/Uygulamalar", page: ()=>const Uygulamalar()),
+          GetPage(name: "/productDefinition", page: ()=>const productDefinition()),
+          GetPage(name: "/Login", page: ()=>const Login()),
+          GetPage(name: "/QRViewExample", page: ()=> QRViewExample()),
+          GetPage(name: "/Ttum", page: ()=>const Ttum()),
+          GetPage(name: "/Register", page: ()=>const Register()),
+          GetPage(name: "/ResetPassword", page: ()=>const ResetPassword()),
+          GetPage(name: "/financeManagement", page: ()=>const financeManagement()),
+          GetPage(name: "/salesAmount", page: ()=>const salesAmount()),
+          GetPage(name: "/AddSalesAmount", page: ()=>const AddSalesAmount()),
+        ],
       ),
     );
   }

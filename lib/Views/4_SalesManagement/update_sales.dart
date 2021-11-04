@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:provider/provider.dart';
 import 'package:ttum/Models/sales.dart';
 import 'package:ttum/Services/calculater.dart';
@@ -25,7 +26,6 @@ class _UpdateSalesState extends State<UpdateSales> {
   TextEditingController yetkilisi = TextEditingController();
   final _formKey = GlobalKey<FormState>();
   var _selectedDate;
-
   @override
   void dispose() {
     cari_kodu.dispose();
@@ -209,7 +209,7 @@ class _UpdateSalesState extends State<UpdateSales> {
                                 ili: ili.text,
                                 ticari_unvan: ticari_unvan.text,
                                 yetkilisi: yetkilisi.text, sales: widget.sales,/* id: ''*/);
-                            Navigator.pop(context);
+                            Get.back();
                           }
                         },
                       ),

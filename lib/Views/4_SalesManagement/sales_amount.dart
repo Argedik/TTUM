@@ -110,6 +110,8 @@ class _BuildListViewState extends State<BuildListView> {
                     filteredList = fullList.where((sale) => sale!.ticari_unvan.toLowerCase().contains(query.toLowerCase())).toList();
                   });
                 }else{
+                  //arama yerini silerken klavye kaybolur
+                  WidgetsBinding.instance!.focusManager.primaryFocus!.unfocus();
                   setState(() {
                     isFiltering=false;
                   });

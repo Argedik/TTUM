@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:provider/provider.dart';
 import 'package:ttum/Services/calculater.dart';
 import 'package:ttum/Views/4_SalesManagement/add_sales_amount_view_model.dart';
@@ -196,7 +197,7 @@ class _AddSalesAmountState extends State<AddSalesAmount> {
                                 ili: ili.text,
                                 ticari_unvan: ticari_unvan.text,
                                 yetkilisi: yetkilisi.text, /*id: ''*/);
-                            Navigator.pop(context);
+                            Get.back();
                           }
                         },
                       ),

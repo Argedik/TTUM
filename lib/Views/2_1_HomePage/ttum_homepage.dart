@@ -1,10 +1,11 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:provider/provider.dart';
 import 'package:ttum/Core/dimensions.dart';
 import 'package:ttum/Dao/auth.dart';
-import 'package:ttum/Views/1_LoginPage/login.dart';
+import 'package:ttum/Views/1_LoginPage/uygulamalar.dart';
 import 'package:ttum/Views/5_FinanceManagement/finance_management.dart';
 
 class Ttum extends StatefulWidget {
@@ -134,11 +135,7 @@ class _TtumState extends State<Ttum> {
           IconButton(
             onPressed: () async {
               Provider.of<Auth>(context, listen: false).signOut();
-              Navigator.pushReplacement(
-                  context,
-                  MaterialPageRoute(
-                    builder: (context) => const Login(),
-                  ));
+              Get.off(const Uygulamalar());
             },
             icon: const Icon(
               Icons.logout,
@@ -248,7 +245,7 @@ class _TtumState extends State<Ttum> {
   GestureDetector buildContainer({required String title, required Icon icon}) {
     return GestureDetector(
       onTap: (){
-        Navigator.push(context, MaterialPageRoute(builder: (context)=>financeManagement()));
+        Get.to(const financeManagement());
       },
       child: Container(
         decoration: const BoxDecoration(

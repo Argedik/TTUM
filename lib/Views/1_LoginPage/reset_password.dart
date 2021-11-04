@@ -1,5 +1,6 @@
 import 'package:email_validator/email_validator.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:provider/provider.dart';
 import 'package:ttum/Dao/auth.dart';
 import 'package:ttum/Views/1_LoginPage/login.dart';
@@ -92,10 +93,7 @@ class _ResetPasswordState extends State<ResetPassword> {
                           await _showMyDialog();
 
                           setState(() {
-                            Navigator.push(
-                                context,
-                                MaterialPageRoute(
-                                    builder: (context) => const Login()));
+                            Get.to(const Login());
                           });
                         }
                       },
@@ -173,7 +171,7 @@ class _ResetPasswordState extends State<ResetPassword> {
             TextButton(
               child: const Text('Anladım'),
               onPressed: () {
-                Navigator.of(context).pop();
+                Get.back();
               },
             ),
           ],

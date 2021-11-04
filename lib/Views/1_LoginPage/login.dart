@@ -1,5 +1,6 @@
 import 'package:email_validator/email_validator.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:provider/provider.dart';
 import 'package:ttum/Dao/auth.dart';
 import 'package:ttum/Models/buttons.dart';
@@ -38,12 +39,7 @@ class _LoginState extends State<Login> {
           await Provider.of<Auth>(context, listen: false).signInAnonymously();
       setState(() {
         _isLoading = false;
-        Navigator.pushReplacement(
-          context,
-          MaterialPageRoute(
-            builder: (context) => const Ttum(),
-          ),
-        );
+        Get.off(const Ttum());
       });
     }
 
@@ -58,15 +54,10 @@ class _LoginState extends State<Login> {
             await Provider.of<Auth>(context, listen: false).signInWithGoogle();
 
         if (user?.uid != null) {
-          Navigator.pushReplacement(
-            context,
-            MaterialPageRoute(
-              builder: (context) => const Ttum(),
-            ),
-          );
+          Get.off(const Ttum());
         }
       }catch(hata){
-        print("userid gelmedi hatası $hata");
+        print("user id gelmedi hatası $hata");
       }
       setState(() {
         buttonPressed = false;
@@ -184,10 +175,7 @@ class _LoginState extends State<Login> {
                                   .signInWithEmailAndPassword(
                                       _emailController.text,
                                       _passwordController.text);
-                          Navigator.pushReplacement(
-                              context,
-                              MaterialPageRoute(
-                                  builder: (context) => const Ttum()));
+                          Get.off( const Ttum());
                           if (user != null && !user.emailVerified) {
                             await _showMyDialog();
                             await Provider.of<Auth>(context, listen: false)
@@ -329,10 +317,8 @@ class _LoginState extends State<Login> {
                               textStyle: const TextStyle(fontSize: 20),
                             ),
                             onPressed: () {
-                              Navigator.push(
-                                  context,
-                                  MaterialPageRoute(
-                                      builder: (context) => const Register()));
+                              Get.to(const Register());
+
                             },
                             child: const Text(
                               'Yeni Kayıt İçin Tıklayınız',
@@ -381,11 +367,7 @@ class _LoginState extends State<Login> {
                             shadowColor: Colors.black,
                           ),
                           onPressed: () {
-                            Navigator.push(
-                                context,
-                                MaterialPageRoute(
-                                    builder: (context) =>
-                                        const ResetPassword()));
+                            Get.to(const ResetPassword());
                           },
                           child: const Text(
                             'Şifremi Unuttum',
@@ -454,7 +436,8 @@ class _LoginState extends State<Login> {
             TextButton(
               child: const Text('Anladım'),
               onPressed: () {
-                Navigator.of(context).pop();
+                // Navigator.of(context).pop();
+                Get.back();
               },
             ),
           ],

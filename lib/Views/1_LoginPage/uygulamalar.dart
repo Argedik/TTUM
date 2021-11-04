@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:ttum/Views/1_LoginPage/login.dart';
 import 'package:ttum/Views/2_1_HomePage/ttum_homepage.dart';
 import 'package:ttum/Views/2_HomePage/product_definition.dart';
@@ -25,10 +26,7 @@ class _UygulamalarState extends State<Uygulamalar> {
           children: [
             GestureDetector(
               onTap: () {
-                Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                        builder: (context) => const productDefinition()));
+                Get.to(const productDefinition(),transition: Transition.zoom);
               },
               child: Container(
                 height: yukseklik * 0.1,
@@ -45,8 +43,7 @@ class _UygulamalarState extends State<Uygulamalar> {
             const SizedBox(height: 20.0,),
             GestureDetector(
               onTap: () {
-                Navigator.push(context,
-                    MaterialPageRoute(builder: (context) => const Login()));
+                Get.to(const Login());
               },
               child: Container(
                 height: yukseklik * 0.1,

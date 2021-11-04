@@ -1,5 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:ttum/Views/4_SalesManagement/add_sales_amount.dart';
 import 'package:ttum/Views/4_SalesManagement/sales_amount.dart';
 
@@ -41,8 +42,7 @@ class _financeManagementState extends State<financeManagement> {
               Map<String, dynamic>? data2 =
                   documentSnapshot.data() as Map<String, dynamic>?;
               print(data2!["Ili"]);*/
-              Navigator.push(context,
-                  MaterialPageRoute(builder: (context) => salesAmount()));
+              Get.to(const salesAmount());
             },
             child: Text("data"),
           ),
@@ -87,7 +87,7 @@ class _financeManagementState extends State<financeManagement> {
       ),
       floatingActionButton: FloatingActionButton(
         onPressed: () async {
-          Navigator.push(context,MaterialPageRoute(builder: (context)=>AddSalesAmount()));
+          Get.to(const AddSalesAmount());
         },child: const Icon(Icons.add),
       ),
     );

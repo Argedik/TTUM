@@ -1,8 +1,10 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:provider/provider.dart';
 import 'package:ttum/Models/cari.dart';
 import 'package:ttum/Models/sales.dart';
+import 'package:ttum/Views/4_SalesManagement/add_sales_amount.dart';
 import 'package:ttum/Views/4_SalesManagement/sales_amount_view_model.dart';
 import 'package:ttum/Views/4_SalesManagement/update_sales.dart';
 
@@ -71,6 +73,11 @@ class _salesAmountState extends State<salesAmount> {
               },
             ),
           ],
+        ),
+        floatingActionButton: FloatingActionButton(
+          onPressed: () async {
+            Get.to(const AddSalesAmount());
+          },child: const Icon(Icons.add),
         ),
       ),
     );

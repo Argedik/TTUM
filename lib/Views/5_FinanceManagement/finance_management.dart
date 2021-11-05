@@ -85,11 +85,7 @@ class _financeManagementState extends State<financeManagement> {
           ),
         ],
       ),
-      floatingActionButton: FloatingActionButton(
-        onPressed: () async {
-          Get.to(const AddSalesAmount());
-        },child: const Icon(Icons.add),
-      ),
+
     );
   }
 }

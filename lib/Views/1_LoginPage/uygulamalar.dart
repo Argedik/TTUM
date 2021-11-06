@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:ttum/Views/1_LoginPage/login.dart';
-import 'package:ttum/Views/2_1_HomePage/ttum_homepage.dart';
+import 'package:ttum/Views/1_LoginPage/login_anonim.dart';
 import 'package:ttum/Views/2_HomePage/product_definition.dart';
 
 class Uygulamalar extends StatefulWidget {
@@ -18,7 +17,7 @@ class _UygulamalarState extends State<Uygulamalar> {
     double yukseklik = MediaQuery.of(context).size.height;
     return Scaffold(
       appBar: AppBar(
-        title: Text("Uygulamalar"),
+        title: const Text("Uygulamalar"),
       ),
       body: Center(
         child: Column(
@@ -43,7 +42,7 @@ class _UygulamalarState extends State<Uygulamalar> {
             const SizedBox(height: 20.0,),
             GestureDetector(
               onTap: () {
-                Get.to(const Login());
+                Get.to(const LoginWithAnonymously());
               },
               child: Container(
                 height: yukseklik * 0.1,

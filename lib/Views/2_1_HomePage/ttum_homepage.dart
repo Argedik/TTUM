@@ -28,7 +28,7 @@ class _TtumState extends State<Ttum> {
     double yukseklik = MediaQuery.of(context).size.height;
 
     return Scaffold(
-      drawer: Drawer(
+      /*drawer: Drawer(
         child: Container(
           color: Colors.blueAccent,
           child: ListView(
@@ -48,7 +48,7 @@ class _TtumState extends State<Ttum> {
                   decoration: BoxDecoration(color: Colors.blueAccent),
                 ),
               ),
-              buildContainer(
+            buildContainer(
                   icon: const Icon(
                     Icons.dashboard,
                     color: Colors.white,
@@ -129,7 +129,8 @@ class _TtumState extends State<Ttum> {
             ],
           ),
         ),
-      ),
+      ),*/
+
       appBar: AppBar(
         actions: [
           IconButton(
@@ -155,8 +156,16 @@ class _TtumState extends State<Ttum> {
           ],
         ),
         centerTitle: true,
+        leading:IconButton(
+          onPressed: () async {
+            Provider.of<Auth>(context, listen: false).signOut();
+            Get.off(const Uygulamalar());
+          },
+          icon: const Icon(
+            Icons.settings,
+          ),
+        ),
       ),
-
       body: SafeArea(
         child: Container(
           decoration: const BoxDecoration(

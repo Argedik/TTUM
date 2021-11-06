@@ -35,8 +35,8 @@ class _LoginState extends State<Login> {
       setState(() {
         _isLoading = true;
       });
-      final user =
-          await Provider.of<Auth>(context, listen: false).signInAnonymously();
+      // final user =
+      //     await Provider.of<Auth>(context, listen: false).signInAnonymously();
       setState(() {
         _isLoading = false;
         Get.off(const Ttum());

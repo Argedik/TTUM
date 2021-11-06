@@ -77,7 +77,8 @@ class _salesAmountState extends State<salesAmount> {
         floatingActionButton: FloatingActionButton(
           onPressed: () async {
             Get.to(const AddSalesAmount());
-          },child: const Icon(Icons.add),
+          },
+          child: const Icon(Icons.add),
         ),
       ),
     );
@@ -102,48 +103,52 @@ class _BuildListViewState extends State<BuildListView> {
 
   @override
   Widget build(BuildContext context) {
-    var fullList=widget.salesList;
+    var fullList = widget.salesList;
     return Flexible(
       child: Column(
         children: [
           Padding(
             padding: const EdgeInsets.all(6.0),
             child: TextField(
-              onChanged: (query){
-                if(query.isNotEmpty){
+              onChanged: (query) {
+                if (query.isNotEmpty) {
                   isFiltering = true;
 
                   setState(() {
-                    filteredList = fullList.where((sale) => sale!.ticari_unvan.toLowerCase().contains(query.toLowerCase())).toList();
+                    filteredList = fullList
+                        .where((sale) => sale!.ticari_unvan
+                            .toLowerCase()
+                            .contains(query.toLowerCase()))
+                        .toList();
                   });
-                }else{
+                } else {
                   //arama yerini silerken klavye kaybolur
                   WidgetsBinding.instance!.focusManager.primaryFocus!.unfocus();
                   setState(() {
-                    isFiltering=false;
+                    isFiltering = false;
                   });
                 }
               },
-                decoration: InputDecoration(
-                    prefixIcon: Icon(Icons.search),
-                    hintText: "Arama: Ticari ünvan",
-                    border: OutlineInputBorder(
-                        borderRadius:
-                            BorderRadius.circular(6.0)))),
+              decoration: InputDecoration(
+                  prefixIcon: Icon(Icons.search),
+                  hintText: "Arama: Ticari ünvan",
+                  border: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(6.0))),
+            ),
           ),
           Flexible(
             child: ListView.builder(
-              itemCount: isFiltering?filteredList.length:fullList.length,
+              itemCount: isFiltering ? filteredList.length : fullList.length,
               itemBuilder: (BuildContext context, int index) {
-                var list = isFiltering?filteredList:fullList;
+                var list = isFiltering ? filteredList : fullList;
                 // var veri = salesList[index];
                 return GestureDetector(
                   onTap: () {
                     Navigator.push(
                         context,
                         MaterialPageRoute(
-                            builder: (context) => UpdateSales(
-                                sales: list[index]!)));
+                            builder: (context) =>
+                                UpdateSales(sales: list[index]!)));
                   },
                   child: Card(
                     color: Colors.lightBlueAccent,
@@ -156,17 +161,13 @@ class _BuildListViewState extends State<BuildListView> {
                       isThreeLine: true,
                     ),*/
                     child: Column(
-                      crossAxisAlignment:
-                          CrossAxisAlignment.start,
+                      crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Center(
                           child: SizedBox(
-                              child: Text(
-                                  list[index]!
-                                      .ticari_unvan,
+                              child: Text(list[index]!.ticari_unvan,
                                   style: const TextStyle(
-                                      fontWeight:
-                                          FontWeight.bold),
+                                      fontWeight: FontWeight.bold),
                                   softWrap: true,
                                   maxLines: 2),
                               width: 100),
@@ -175,10 +176,8 @@ class _BuildListViewState extends State<BuildListView> {
                         Row(
                           children: [
                             SizedBox(
-                              child: Text(
-                                  list[index]!.yetkilisi,
-                                  softWrap: true,
-                                  maxLines: 2),
+                              child: Text(list[index]!.yetkilisi,
+                                  softWrap: true, maxLines: 2),
                               width: 75,
                             ),
                             SizedBox(
@@ -192,16 +191,12 @@ class _BuildListViewState extends State<BuildListView> {
                               width: 75,
                             ),*/
                             SizedBox(
-                              child: Text(
-                                  list[index]!
-                                      .genel_toplam,
-                                  softWrap: true,
-                                  maxLines: 2),
+                              child: Text(list[index]!.genel_toplam,
+                                  softWrap: true, maxLines: 2),
                               width: 75,
                             ),
                           ],
-                          mainAxisAlignment:
-                              MainAxisAlignment.spaceBetween,
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         ),
                       ],
                     ),

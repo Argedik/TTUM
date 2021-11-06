@@ -1,7 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 
-// import 'borrow_info_model.dart';
-
 class Sales {
   /*final String id;*/
   final String cari_kodu;
@@ -24,11 +22,9 @@ class Sales {
         required this.ticari_unvan,
         required this.yetkilisi});
 
-  // final List<BorrowInfo> borrows;
 
   /// objeden map oluşturan
   Map<String, dynamic> toMap() {
-    ///List<BookInfo> ---> List<Map>
 
     return {
       /*"id":id,*/

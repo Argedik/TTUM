@@ -4,10 +4,10 @@ import 'package:ttum/Models/sales.dart';
 class Database {
   FirebaseFirestore _firestore = FirebaseFirestore.instance;
 
-  Stream<QuerySnapshot<Map<String, dynamic>>> getCariListFromApi(
+/*  Stream<QuerySnapshot<Map<String, dynamic>>> getCariListFromApi(
       String referancePath) {
     return _firestore.collection(referancePath).snapshots();
-  }
+  }*/
 
   Stream<QuerySnapshot<Map<String, dynamic>>> getSalesListFromApi(
       String referancePath) {
@@ -19,7 +19,9 @@ class Database {
       required Map<String, dynamic> salesAsMap}) async {
     await _firestore
         .collection(collectionPath)
-        .doc(Sales.fromMap(salesAsMap).cari_kodu)
+          //istenirse cari kodu olarak id tanımlanabilir
+          //.doc(Sales.fromMap(salesAsMap).cari_kodu)
+        .doc()
         .set(salesAsMap);
   }
 }

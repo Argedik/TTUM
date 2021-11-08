@@ -4,14 +4,14 @@ import 'package:get/get.dart';
 import 'package:ttum/Views/4_SalesManagement/add_sales_amount.dart';
 import 'package:ttum/Views/4_SalesManagement/sales_amount.dart';
 
-class financeManagement extends StatefulWidget {
-  const financeManagement({Key? key}) : super(key: key);
+class FinanceManagement extends StatefulWidget {
+  const FinanceManagement({Key? key}) : super(key: key);
 
   @override
-  _financeManagementState createState() => _financeManagementState();
+  _FinanceManagementState createState() => _FinanceManagementState();
 }
 
-class _financeManagementState extends State<financeManagement> {
+class _FinanceManagementState extends State<FinanceManagement> {
   final FirebaseFirestore _database = FirebaseFirestore.instance;
 
   @override

@@ -5,8 +5,9 @@ import 'package:get/get.dart';
 import 'package:provider/provider.dart';
 import 'package:ttum/Core/dimensions.dart';
 import 'package:ttum/Dao/auth.dart';
-import 'package:ttum/Views/1_LoginPage/uygulamalar.dart';
-import 'package:ttum/Views/5_FinanceManagement/finance_management.dart';
+import 'package:ttum/Views/1_LoginPage/login_anonim.dart';
+import 'package:ttum/Views/Settings/securty.dart';
+import 'package:ttum/Views/Settings/settings.dart';
 
 class Ttum extends StatefulWidget {
   const Ttum({Key? key}) : super(key: key);
@@ -20,14 +21,88 @@ class _TtumState extends State<Ttum> {
 
   @override
   Widget build(BuildContext context) {
+    String appbarTitle = "Aktif Varlıklar";
+    String appbarSubTitle = "Finans Analizi";
     final CollectionReference cariRef = _database.collection("cari_tanimlari");
 
     final DocumentReference documentRef = cariRef.doc("0V01QRxAYtOGeFw2aLPQ");
 
     //double genislik = MediaQuery.of(context).size.width;
-    double yukseklik = MediaQuery.of(context).size.height;
+    double yukseklik = MediaQuery
+        .of(context)
+        .size
+        .height;
 
     return Scaffold(
+      drawer: Drawer(
+        child: Container(
+          color: Colors.blueAccent,
+          child: ListView(
+            children:  [
+              const SizedBox(
+                height: 80,
+                child: DrawerHeader(
+                  margin: EdgeInsets.all(0.0),
+                  padding: EdgeInsets.all(0.0),
+                  child: Center(
+                    child: Text(
+                      "Tüm Teknoloji Üretim Merkezi",
+                      style: TextStyle(color: Colors.white, fontSize: 19),
+                    ),
+                  ),
+                  decoration: BoxDecoration(color: Colors.blueAccent),
+                ),
+              ),
+              GestureDetector(
+                onTap: (){
+                  Get.to(const SettingsPage());
+                },
+                child: buildContainer(
+                    icon: const Icon(
+                      Icons.dashboard,
+                      color: Colors.white,
+                    ),
+                    title: "Menüler"),
+              ),
+              buildContainer(
+                  icon: const Icon(
+                    Icons.dashboard,
+                    color: Colors.white,
+                  ),
+                  title: "Genel Ayarlar"),
+              GestureDetector(
+                onTap: (){
+                  Get.to(const securty());
+                },
+                child: buildContainer(
+                    icon: const Icon(
+                      Icons.dashboard,
+                      color: Colors.white,
+                    ),
+                    title: "Güvenlik Ayarları"),
+              ),
+              buildContainer(
+                  icon: const Icon(
+                    Icons.dashboard,
+                    color: Colors.white,
+                  ),
+                  title: "Profil"),
+              buildContainer(
+                  icon: const Icon(
+                    Icons.dashboard,
+                    color: Colors.white,
+                  ),
+                  title: "Hakkında"),
+              buildContainer(
+                  icon: const Icon(
+                    Icons.logout,
+                    color: Colors.white,
+                  ),
+                  title: "Çıkış yap"),
+            ],
+          ),
+        ),
+      ),
       /*drawer: Drawer(
         child: Container(
           color: Colors.blueAccent,
@@ -136,7 +211,7 @@ class _TtumState extends State<Ttum> {
           IconButton(
             onPressed: () async {
               Provider.of<Auth>(context, listen: false).signOut();
-              /*Get.off(const Uygulamalar());*/
+              Get.off(const LoginWithAnonymously());
             },
             icon: const Icon(
               Icons.logout,
@@ -144,11 +219,11 @@ class _TtumState extends State<Ttum> {
           ),
         ],
         title: Column(
-          children: const [
-            Text("Aktif Varlıklar"),
+          children: [
+            Text(appbarTitle),
             Text(
-              "Finans Analizi",
-              style: TextStyle(
+              appbarSubTitle,
+              style: const TextStyle(
                 fontWeight: FontWeight.w300,
                 fontSize: 15,
               ),
@@ -156,14 +231,18 @@ class _TtumState extends State<Ttum> {
           ],
         ),
         centerTitle: true,
-        leading:IconButton(
-          onPressed: () async {
-            Provider.of<Auth>(context, listen: false).signOut();
-            /*Get.off(const Uygulamalar());*/
-          },
-          icon: const Icon(
-            Icons.settings,
-          ),
+        leading: Builder(builder: (context) {
+          return IconButton(
+            onPressed: () {
+              Scaffold.of(context).openDrawer();
+            },
+            icon: const Icon(
+              Icons.settings,
+            ),
+          );
+
+        }
+
         ),
       ),
       body: SafeArea(
@@ -251,49 +330,43 @@ class _TtumState extends State<Ttum> {
     );
   }
 
-  GestureDetector buildContainer({required String title, required Icon icon}) {
-    return GestureDetector(
-      onTap: (){
-        Get.to(const financeManagement());
-      },
-      child: Container(
-        decoration: const BoxDecoration(
-          color: Color(0xFF416BA9),
-          border: Border(
-            bottom: BorderSide(
-                width: 4.0, style: BorderStyle.solid, color: Colors.blueAccent),
-          ),
+  Container buildContainer({required String title, required Icon icon}) {
+    return Container(
+      decoration: const BoxDecoration(
+        color: Color(0xFF416BA9),
+        border: Border(
+          bottom: BorderSide(
+              width: 4.0, style: BorderStyle.solid, color: Colors.blueAccent),
         ),
-        child: SizedBox(
-          height: 45,
-          child: ListTile(
-            leading: Transform.translate(
-              offset: const Offset(-8, -5),
-              child: icon,
+      ),
+      child: SizedBox(
+        height: 45,
+        child: ListTile(
+          leading: Transform.translate(
+            offset: const Offset(-8, -5),
+            child: icon,
+          ),
+          /*
+              subtitle: Text("Deneme"),
+              // üçüncü satır
+              isThreeLine: true,
+              //ortala
+              dense: true,*/
+          title: Transform.translate(
+            offset: const Offset(-16, -5),
+            child: Text(
+              title,
+              style: const TextStyle(
+                  fontSize: 13,
+                  color: Colors.white,
+                  fontWeight: FontWeight.w500),
             ),
-            /*
-                subtitle: Text("Deneme"),
-                // üçüncü satır
-                isThreeLine: true,
-                //ortala
-                dense: true,*/
-            tileColor: Colors.red,
-            title: Transform.translate(
-              offset: const Offset(-16, -5),
-              child: Text(
-                title,
-                style: const TextStyle(
-                    fontSize: 12,
-                    color: Colors.white,
-                    fontWeight: FontWeight.w500),
-              ),
-            ),
-            trailing: Transform.translate(
-              offset: const Offset(8, -5),
-              child: const Icon(
-                Icons.arrow_forward_ios_rounded,
-                color: Colors.white,
-              ),
+          ),
+          trailing: Transform.translate(
+            offset: const Offset(8, -5),
+            child: const Icon(
+              Icons.arrow_forward_ios_rounded,
+              color: Colors.white,
             ),
           ),
         ),

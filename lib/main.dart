@@ -55,7 +55,7 @@ class MyApp extends StatelessWidget {
           GetPage(name: "/Ttum", page: ()=>const Ttum()),
           GetPage(name: "/Register", page: ()=>const Register()),
           GetPage(name: "/ResetPassword", page: ()=>const ResetPassword()),
-          GetPage(name: "/financeManagement", page: ()=>const financeManagement()),
+          GetPage(name: "/financeManagement", page: ()=>const FinanceManagement()),
           GetPage(name: "/salesAmount", page: ()=>const salesAmount()),
           GetPage(name: "/AddSalesAmount", page: ()=>const AddSalesAmount()),
         ],

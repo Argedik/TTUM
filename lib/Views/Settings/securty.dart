@@ -1,22 +1,24 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:ttum/Core/dimensions.dart';
 import 'package:ttum/Models/appbar.dart';
 import 'package:ttum/Models/menues.dart';
+import 'package:ttum/Views/2_HomePage/ttum_homepage.dart';
 
-class SettingsPage extends StatefulWidget {
-  const SettingsPage({Key? key}) : super(key: key);
+class securty extends StatefulWidget {
+  const securty({Key? key}) : super(key: key);
 
   @override
-  _SettingsPageState createState() => _SettingsPageState();
+  _securtyState createState() => _securtyState();
 }
 
-class _SettingsPageState extends State<SettingsPage> {
+class _securtyState extends State<securty> {
   late List<bool> _isChecked ;
 
   @override
   void initState() {
     super.initState();
-    _isChecked = List<bool>.filled(Menues().options.length, false);
+    _isChecked = List<bool>.filled(Menues().securty.length, false);
   }
   @override
   Widget build(BuildContext context) {
@@ -48,7 +50,7 @@ class _SettingsPageState extends State<SettingsPage> {
           ),
           child: ListView.builder(
             padding: const EdgeInsets.all(edgeInsetsAll),
-            itemCount: Menues().options.length,
+            itemCount: Menues().securty.length,
             itemBuilder: (BuildContext context, int index) {
               return Card(
                 //kod dışarı taşmasın clip.antialias
@@ -74,7 +76,7 @@ class _SettingsPageState extends State<SettingsPage> {
                             Padding(
                               padding: EdgeInsets.only(left: 20),
                               child: Text(
-                                Menues().options[index],
+                                Menues().securty[index],
                                 style: const TextStyle(
                                   color: Colors.white,
                                   fontWeight: FontWeight.w500,
@@ -95,6 +97,7 @@ class _SettingsPageState extends State<SettingsPage> {
                           setState(
                                 () {
                               _isChecked[index] = val!;
+                              Get.to(Ttum());
                             },
                           );
                         },
@@ -109,6 +112,4 @@ class _SettingsPageState extends State<SettingsPage> {
       ),
     );
   }
-
-
 }

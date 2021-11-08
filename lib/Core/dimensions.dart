@@ -1,4 +1,3 @@
-import 'package:flutter/material.dart';
 
 const double primarySize = 0.01;
 const double secondarySize = 0.01;

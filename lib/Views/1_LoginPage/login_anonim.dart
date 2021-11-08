@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:ttum/Core/colors.dart';
-import 'package:ttum/Views/2_1_HomePage/ttum_homepage.dart';
+import 'package:ttum/Views/2_HomePage/ttum_homepage.dart';
 
 class LoginWithAnonymously extends StatefulWidget {
   const LoginWithAnonymously({Key? key}) : super(key: key);

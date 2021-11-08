@@ -1,3 +1,4 @@
+/*
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:ttum/Views/1_LoginPage/login_anonim.dart';
@@ -25,23 +26,6 @@ class _UygulamalarState extends State<Uygulamalar> {
           children: [
             GestureDetector(
               onTap: () {
-                Get.to(const productDefinition(),transition: Transition.zoom);
-              },
-              child: Container(
-                height: yukseklik * 0.1,
-                width: genislik * 0.6,
-                margin: const EdgeInsets.symmetric(vertical: 10),
-                padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 5),
-                decoration: BoxDecoration(
-                  color: Colors.blueAccent,
-                  borderRadius: BorderRadius.circular(29),
-                ),
-                child: const Center(child: Text("Barkod denemesi")),
-              ),
-            ),
-            const SizedBox(height: 20.0,),
-            GestureDetector(
-              onTap: () {
                 Get.to(const LoginWithAnonymously());
               },
               child: Container(
@@ -62,3 +46,4 @@ class _UygulamalarState extends State<Uygulamalar> {
     );
   }
 }
+*/

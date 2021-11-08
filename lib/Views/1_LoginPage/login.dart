@@ -6,8 +6,7 @@ import 'package:ttum/Dao/auth.dart';
 import 'package:ttum/Models/buttons.dart';
 import 'package:ttum/Views/1_LoginPage/register.dart';
 import 'package:ttum/Views/1_LoginPage/reset_password.dart';
-import 'package:ttum/Views/2_1_HomePage/ttum_homepage.dart';
-
+import 'package:ttum/Views/2_HomePage/ttum_homepage.dart';
 class Login extends StatefulWidget {
   const Login({Key? key}) : super(key: key);
 

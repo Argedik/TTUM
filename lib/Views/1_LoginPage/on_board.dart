@@ -3,8 +3,10 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:ttum/Dao/auth.dart';
 import 'package:ttum/Views/1_LoginPage/login.dart';
+import 'package:ttum/Views/1_LoginPage/login_anonim.dart';
+import 'package:ttum/Views/1_LoginPage/login_id.dart';
 import 'package:ttum/Views/1_LoginPage/uygulamalar.dart';
-import 'package:ttum/Views/2_1_HomePage/ttum_homepage.dart';
+import 'package:ttum/Views/2_HomePage/ttum_homepage.dart';
 
 class OnBoardWidget extends StatefulWidget {
   const OnBoardWidget({Key? key}) : super(key: key);
@@ -39,7 +41,7 @@ class _OnBoardWidgetState extends State<OnBoardWidget> {
         stream: _auth.authStatus(),
         builder: (BuildContext context, AsyncSnapshot<dynamic> snapshot) {
           if (snapshot.connectionState == ConnectionState.active) {
-            return snapshot.data!= null ? const Ttum() : const Uygulamalar();
+            return snapshot.data!= null ? const Ttum() : const LoginWithAnonymously();
           } else {
             return const SizedBox(
               height: 100,

@@ -136,7 +136,7 @@ class _TtumState extends State<Ttum> {
           IconButton(
             onPressed: () async {
               Provider.of<Auth>(context, listen: false).signOut();
-              Get.off(const Uygulamalar());
+              /*Get.off(const Uygulamalar());*/
             },
             icon: const Icon(
               Icons.logout,
@@ -159,7 +159,7 @@ class _TtumState extends State<Ttum> {
         leading:IconButton(
           onPressed: () async {
             Provider.of<Auth>(context, listen: false).signOut();
-            Get.off(const Uygulamalar());
+            /*Get.off(const Uygulamalar());*/
           },
           icon: const Icon(
             Icons.settings,

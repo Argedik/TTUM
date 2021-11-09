@@ -3,8 +3,10 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:provider/provider.dart';
+import 'package:ttum/Core/colors.dart';
 import 'package:ttum/Core/dimensions.dart';
 import 'package:ttum/Dao/auth.dart';
+import 'package:ttum/Views/1_LoginPage/login.dart';
 import 'package:ttum/Views/1_LoginPage/login_anonim.dart';
 import 'package:ttum/Views/Settings/securty.dart';
 import 'package:ttum/Views/Settings/settings.dart';
@@ -36,21 +38,21 @@ class _TtumState extends State<Ttum> {
     return Scaffold(
       drawer: Drawer(
         child: Container(
-          color: Colors.blueAccent,
+          color: Color(0xffECEAEA),
           child: ListView(
             children:  [
               const SizedBox(
-                height: 80,
+                height: 120,
                 child: DrawerHeader(
                   margin: EdgeInsets.all(0.0),
                   padding: EdgeInsets.all(0.0),
                   child: Center(
                     child: Text(
                       "Tüm Teknoloji Üretim Merkezi",
-                      style: TextStyle(color: Colors.white, fontSize: 19),
+                      style: TextStyle(color:ttum, fontSize: 19),
                     ),
                   ),
-                  decoration: BoxDecoration(color: Colors.blueAccent),
+                  decoration: BoxDecoration(color:Color(0xffECEAEA)),
                 ),
               ),
               GestureDetector(
@@ -336,11 +338,11 @@ class _TtumState extends State<Ttum> {
         color: Color(0xFF416BA9),
         border: Border(
           bottom: BorderSide(
-              width: 4.0, style: BorderStyle.solid, color: Colors.blueAccent),
+              width: 4.0, style: BorderStyle.solid, color: Color(0xffECEAEA)),
         ),
       ),
       child: SizedBox(
-        height: 45,
+        height: 50,
         child: ListTile(
           leading: Transform.translate(
             offset: const Offset(-8, -5),

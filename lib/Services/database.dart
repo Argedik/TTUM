@@ -8,7 +8,7 @@ class Database {
       String referancePath) {
     return _firestore.collection(referancePath).snapshots();
   }*/
-
+  //Cari güncelleme
   Stream<QuerySnapshot<Map<String, dynamic>>> getSalesListFromApi(
       String referancePath) {
     return _firestore.collection(referancePath).snapshots();
@@ -22,6 +22,24 @@ class Database {
           //istenirse cari kodu olarak id tanımlanabilir
           //.doc(Sales.fromMap(salesAsMap).cari_kodu)
         .doc()
+        .set(salesAsMap);
+  }
+
+  //Ayar güncelleme
+
+  Stream<QuerySnapshot<Map<String, dynamic>>> getSettingsFromApi(
+      String referancePath) {
+    return _firestore.collection(referancePath).snapshots();
+  }
+
+  Future<void> setSettings(
+      {required String collectionPath,
+        required Map<String, dynamic> salesAsMap}) async {
+    await _firestore
+        .collection(collectionPath)
+    //istenirse cari kodu olarak id tanımlanabilir
+    //.doc(Sales.fromMap(salesAsMap).cari_kodu)
+        .doc("login_setting")
         .set(salesAsMap);
   }
 }

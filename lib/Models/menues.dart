@@ -14,10 +14,16 @@ class Menues{
     "Anonim Giriş",
     "Email ile Giriş",
     "Sms ile Giriş",
-    "Id ile Giriş",
+    "Kullanıcı adı ile Giriş",
     "Google ile Giriş",
   ];
-
+  List<String> securtyDetails = [
+    "Anonim Giriş, Herhangi bir giriş kontrolü gerekmez.",
+    "Email ile Giriş, Mail onaylı giriş yapılması gerekir.",
+    "Sms ile Giriş, Kayıtlı telefon numarasına SMS doğrulama kodu gönderilecektir.",
+    "Kullanıcı Girişi, Kullanıcı adı ve şifre ile giriş yapılması gerekir.",
+    "Google ile Giriş, Mail onaylı giriş yapılması gerekir.",
+  ];
 }
 //YOUTUBE DROPDOWNLİST DENEMESİ
 /*class Menues {

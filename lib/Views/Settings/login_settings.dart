@@ -9,17 +9,16 @@ import 'package:ttum/Models/general_setting.dart';
 import 'package:ttum/Models/menues.dart';
 import 'package:ttum/Views/Settings/securty_view_model.dart';
 
-class securty extends StatefulWidget {
-  const securty({Key? key}) : super(key: key);
+class LoginSettings extends StatefulWidget {
+  const LoginSettings({Key? key}) : super(key: key);
 
   @override
-  _securtyState createState() => _securtyState();
+  _LoginSettingsState createState() => _LoginSettingsState();
 }
 
-class _securtyState extends State<securty> {
+class _LoginSettingsState extends State<LoginSettings> {
+  final Stream<QuerySnapshot> _loginStream = FirebaseFirestore.instance.collection('genel_ayar').snapshots();
   late List<bool> _isChecked;
-  final Stream<QuerySnapshot> _securty =
-      FirebaseFirestore.instance.collection('genel_ayar').snapshots();
 
   @override
   void initState() {
@@ -130,7 +129,7 @@ class _securtyState extends State<securty> {
                     print(d);*/
 
                     final List<GeneralSetting?> GeneralList;
-                    print(snapshot.data!.length);
+                    print(snapshot);
                     return ListView.builder(
                       padding: const EdgeInsets.all(edgeInsetsAll),
                       itemCount: Menues().securty.length,
@@ -156,10 +155,10 @@ class _securtyState extends State<securty> {
                                       unselectedWidgetColor: Colors.white),
                                   child: CheckboxListTile(
                                     value: _isChecked[index],
-                                     // value: index==b?true:false,
+                                    // value: index==b?true:false,
                                     onChanged: (val) async {
                                       setState(
-                                        () {
+                                            () {
                                           /*_isChecked[index] = val!;
                                           Get.to(Ttum());*/
                                           //_isChecked[index] = val!;
@@ -225,9 +224,9 @@ class _securtyState extends State<securty> {
                                           0, detay.indexOf(",")),
                                       backgroundColor: ttum,
                                       titleStyle:
-                                          TextStyle(color: Colors.white),
+                                      TextStyle(color: Colors.white),
                                       middleTextStyle:
-                                          TextStyle(color: Colors.white),
+                                      TextStyle(color: Colors.white),
                                       middleText: detay.substring(
                                           detay.indexOf(",") + 2, detay.length),
                                     );

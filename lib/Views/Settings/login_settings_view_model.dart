@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:ttum/Models/general_setting.dart';
 import 'package:ttum/Services/database.dart';
 
-class SecurityViewModel extends ChangeNotifier {
+class LoginSettingsViewModel extends ChangeNotifier {
   final Database _database = Database();
   String collectionPath = "genel_ayar";
 
@@ -34,17 +34,15 @@ class SecurityViewModel extends ChangeNotifier {
     // Stream<QuerySnapshot> önce okun sağındakine çeviriyoruz -->
     //Stream<List<DocumentSnapshot
     print("absürt");
-    print(FirebaseFirestore.instance.collection("genel_ayar").doc().get());
-    print(FirebaseFirestore.instance.collection("genel_ayar"));
-    print(FirebaseFirestore.instance.collection("genel_ayar").doc("login_setting"));
+    print(FirebaseFirestore.instance.collection(collectionPath).get());
     print("deneme");
     Stream<List<QueryDocumentSnapshot<Map<String, dynamic>>>>
-        streamListDocument = FirebaseFirestore.instance.collection("genel_ayar").snapshots()
-            .map((querySnapshot) => querySnapshot.docs);
+    streamListDocument = FirebaseFirestore.instance.collection("genel_ayar").snapshots()
+        .map((querySnapshot) => querySnapshot.docs);
     //Stream<List<DocumentSnapshot>>-->Stream<List<GeneralSetting>>
     Stream<List<GeneralSetting>> streamListSettings = streamListDocument.map(
       //listofdocsnap firebaseden ne map ne list olarak geliyor documentsnapshot geliyor
-        (listofDocSnap) => listofDocSnap
+            (listofDocSnap) => listofDocSnap
             .map((docSnap) => GeneralSetting.fromMap(docSnap.data()))
             .toList());
     print(streamListDocument.length);

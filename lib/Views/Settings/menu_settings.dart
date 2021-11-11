@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:ttum/Core/colors.dart';
 import 'package:ttum/Core/dimensions.dart';
 import 'package:ttum/Models/appbar.dart';
 import 'package:ttum/Models/menues.dart';
@@ -25,9 +26,10 @@ class _SettingsPageState extends State<SettingsPage> {
     return Scaffold(
       appBar: AppBar(
         title: AppBarTitle(
-          appBarTitle: 'Genel Ayarlar',
+          appBarTitle: 'Menüler',
         ),
         centerTitle: true,
+        backgroundColor: ttum,
       ),
       body: Center(
         child: Container(
@@ -59,7 +61,7 @@ class _SettingsPageState extends State<SettingsPage> {
                 shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(15)),
                 semanticContainer: true,
-                color: Colors.blueAccent,
+                color: ttum,
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [

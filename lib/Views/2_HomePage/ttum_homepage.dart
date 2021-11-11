@@ -8,8 +8,10 @@ import 'package:ttum/Core/dimensions.dart';
 import 'package:ttum/Dao/auth.dart';
 import 'package:ttum/Views/1_LoginPage/login.dart';
 import 'package:ttum/Views/1_LoginPage/login_anonim.dart';
+import 'package:ttum/Views/4_SalesManagement/sales_amount.dart';
+import 'package:ttum/Views/Settings/login_settings.dart';
 import 'package:ttum/Views/Settings/securty.dart';
-import 'package:ttum/Views/Settings/settings.dart';
+import 'package:ttum/Views/Settings/menu_settings.dart';
 
 class Ttum extends StatefulWidget {
   const Ttum({Key? key}) : super(key: key);
@@ -66,22 +68,27 @@ class _TtumState extends State<Ttum> {
                     ),
                     title: "Menüler"),
               ),
-              buildContainer(
-                  icon: const Icon(
-                    Icons.dashboard,
-                    color: Colors.white,
-                  ),
-                  title: "Genel Ayarlar"),
               GestureDetector(
                 onTap: (){
-                  Get.to(const securty());
+                  Get.to(const salesAmount());
                 },
                 child: buildContainer(
                     icon: const Icon(
                       Icons.dashboard,
                       color: Colors.white,
                     ),
-                    title: "Güvenlik Ayarları"),
+                    title: "Menü Ayarları"),
+              ),
+              GestureDetector(
+                onTap: (){
+                  Get.to(const LoginSettings());
+                },
+                child: buildContainer(
+                    icon: const Icon(
+                      Icons.dashboard,
+                      color: Colors.white,
+                    ),
+                    title: "Giriş Ayarları"),
               ),
               buildContainer(
                   icon: const Icon(

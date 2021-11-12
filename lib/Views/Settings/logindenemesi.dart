@@ -7,30 +7,34 @@ import 'package:ttum/Core/dimensions.dart';
 import 'package:ttum/Models/appbar.dart';
 import 'package:ttum/Models/general_setting.dart';
 import 'package:ttum/Models/menues.dart';
-import 'package:ttum/Views/Settings/login_settings_view_model.dart';
+import 'package:ttum/Views/Settings/securty_view_model.dart';
 
-class LoginSettings extends StatefulWidget {
-  const LoginSettings({Key? key}) : super(key: key);
+class LoginSettingsdenemes extends StatefulWidget {
+  const LoginSettingsdenemes({Key? key}) : super(key: key);
 
   @override
-  _LoginSettingsState createState() => _LoginSettingsState();
+  _LoginSettingsdenemesState createState() => _LoginSettingsdenemesState();
 }
 
-class _LoginSettingsState extends State<LoginSettings> {
+class _LoginSettingsdenemesState extends State<LoginSettingsdenemes> {
   late List<bool> _isChecked;
 
   @override
   void initState() {
     super.initState();
     _isChecked = List<bool>.filled(Menues().securty.length, false);
+    // print(_isChecked);
   }
 
   @override
   Widget build(BuildContext context) {
+    final DocumentReference<Map<String, dynamic>> _loginStream = FirebaseFirestore.instance.collection('genel_ayar').doc("login_setting");
+    final Stream<QuerySnapshot<Map<String, dynamic>>> _loginStream2 = FirebaseFirestore.instance.collection('genel_ayar').snapshots();
+
     var height = MediaQuery.of(context).size.height;
 
-    return ChangeNotifierProvider<LoginSettingsViewModel>(
-      create: (BuildContext context) => LoginSettingsViewModel(),
+    return ChangeNotifierProvider<SecurityViewModel>(
+      create: (BuildContext context) => SecurityViewModel(),
       builder: (context, _) => Scaffold(
         appBar: AppBar(
           backgroundColor: ttum,
@@ -56,13 +60,35 @@ class _LoginSettingsState extends State<LoginSettings> {
                 stops: [0.0, 0.318, 0.657, 1.0],
               ),
             ),
-            child: StreamBuilder<List<GeneralSetting>>(
-              stream:Provider.of<LoginSettingsViewModel>(context, listen: false)
-                  .getSettingList(),
-              builder: (BuildContext context,  snapshot) {
+
+            // StreamBuilder<List<Sales>>(
+            //   stream: Provider.of<SalesAmountViewModel>(context, listen: false)
+            //       .getSalesList(),
+            //   builder: (BuildContext context, snapshot) {
+            //     if (snapshot.hasError) {
+            //       print(snapshot.error);
+            //       return const Center(
+            //         child: Text("Bir hata oluştu. Daha sonra tekrar deneyiniz"),
+            //       );
+            //     } else {
+            //       if (!snapshot.hasData) {
+            //         return const Center(
+            //           child: CircularProgressIndicator(),
+            //         );
+            //       } else {
+            //         List<Sales?> salesList = snapshot.data!;
+            //         return BuildListView(salesList: salesList);
+            //       }
+            //     }
+            //   },
+            // ),
+            child: StreamBuilder<QuerySnapshot<Map<String, dynamic>>>(
+              stream:_loginStream2,
+              builder: (BuildContext context, AsyncSnapshot snapshot) {
                 if (snapshot.hasError) {
+                  print("data verisi");
+                  print(snapshot.data);
                   print(snapshot.error);
-                  print("geliyor");
                   return const Center(
                     child: Text("Bir hata oluştu. Daha sonra tekrar deneyiniz"),
                   );
@@ -72,6 +98,47 @@ class _LoginSettingsState extends State<LoginSettings> {
                       child: CircularProgressIndicator(),
                     );
                   } else {
+                    //         return BuildListView(salesList: salesList);
+                    // QuerySnapshot salesList = snapshot.data!;
+                    /*print(salesList);
+                    print(salesList.docs);
+                    print(salesList.docs[1].data() as Map);*/
+                    /*QuerySnapshot salesList = snapshot.data!;
+                    var c = salesList.docs[1].data() as Map;
+                    var b;
+                    var a=0;
+                    var d;
+                    var e;
+                    print("for döngüsü");
+                    print(c);
+                    c.forEach((key, value) {
+                      if(value==1){
+                        b = a;
+                        d=key;
+                      }
+                      a++;
+                    });
+                    print("$d $b");
+                    print("***************************");
+                    a=0;
+                    for (var i in Menues().securty) {
+                      print(i.substring(0,i.indexOf(" ")).toLowerCase());
+                      i.substring(0,i.indexOf(" ")).toLowerCase()==d?b=a:e=0;
+                      print(i);
+                      a++;
+                    }
+                    print("$b");
+                    print(Menues().securty);
+                    print(d);*/
+                    print("login denemeleri");
+                    List<DocumentSnapshot> listofdoc=snapshot.data.docs;
+                    final List<GeneralSetting?> GeneralList;
+                    print(snapshot);
+                    print(snapshot.data);
+                    print(snapshot.data.docs);
+                    print(snapshot.data.docs.length);
+                    print(listofdoc.length);
+                    print(listofdoc[0].data());
                     return ListView.builder(
                       padding: const EdgeInsets.all(edgeInsetsAll),
                       itemCount: Menues().securty.length,

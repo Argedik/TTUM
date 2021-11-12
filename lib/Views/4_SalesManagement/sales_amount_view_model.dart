@@ -14,8 +14,8 @@ class SalesAmountViewModel extends ChangeNotifier {
             .map((querySnapshot) => querySnapshot.docs);
     Stream<List<Sales>> streamListSales = streamListDocument.map(
         (listofDocSnap) => listofDocSnap
-            .map((docSnap) { return Sales.fromMap(docSnap.data().toList());
-            }
+            .map((docSnap) => Sales.fromMap(docSnap.data()))
+            .toList());
 
     return streamListSales;
   }

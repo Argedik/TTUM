@@ -30,11 +30,11 @@ class GeneralSetting {
     };
   }
 
-  /// mapTen obje oluşturan yapıcı
+  /// mapTen GeneralSettings objesi oluşturan yapıcı
+  ///itemObject =Item(title: itemAsMap["title"], isDone: itemAsMap["isDone"]);
   factory GeneralSetting.fromMap(Map map) {
     return GeneralSetting(
       /*id: map["id"],*/
-      //
       Anonymously: map['Anonymously'],
       email: map["email"],
       google: map["google"],

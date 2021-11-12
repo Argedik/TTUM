@@ -30,28 +30,71 @@ class LoginSettingsViewModel extends ChangeNotifier {
   }*/
 
 
+  /*Stream<List<GeneralSetting>> getSettingList() {
+    // Stream<QuerySnapshot> önce okun sağındakine çeviriyoruz -->
+    //Stream<List<DocumentSnapshot
+    print("absürt");
+    print(FirebaseFirestore.instance.collection(collectionPath).get());
+    print(FirebaseFirestore.instance.collection(collectionPath).snapshots());
+    print("deneme");
+
+    Stream<List<QueryDocumentSnapshot<Map<String, dynamic>>>>
+    streamListDocument = _database.getSnapShots(collectionPath)
+        .map((querySnapshot) {
+      print(querySnapshot.docs);
+      print(querySnapshot.docs[1]);
+      print(querySnapshot.docs[1].data());
+      print(querySnapshot.docs[1].data()["google"].toString());
+      print("docs olmuyor");
+      return querySnapshot.docs;
+    });
+    //Stream<List<DocumentSnapshot>>-->Stream<List<GeneralSetting>>
+    Stream<List<GeneralSetting>> streamListSettings = streamListDocument.map(
+            (listofDocSnap) => listofDocSnap
+            .map((docSnap) => GeneralSetting.fromMap(docSnap.data()))
+            .toList());
+    print(streamListDocument.length);
+    print("${streamListDocument.first} first komudu");
+    print(streamListDocument);
+    print("absürt2");
+    print(streamListSettings);
+    return streamListSettings;
+  }*/
+
+
+
   Stream<List<GeneralSetting>> getSettingList() {
     // Stream<QuerySnapshot> önce okun sağındakine çeviriyoruz -->
     //Stream<List<DocumentSnapshot
     print("absürt");
     print(FirebaseFirestore.instance.collection(collectionPath).get());
+    print(FirebaseFirestore.instance.collection(collectionPath).snapshots());
     print("deneme");
-    Stream<List<QueryDocumentSnapshot<Map<String, dynamic>>>>
-    streamListDocument = FirebaseFirestore.instance.collection("genel_ayar").snapshots()
-        .map((querySnapshot) => querySnapshot.docs);
+
+    Stream<QueryDocumentSnapshot<Map<String, dynamic>>>
+        streamListDocument = _database.getSnapShots(collectionPath)
+            .map((querySnapshot) {
+      print(querySnapshot.docs);
+      print(querySnapshot.docs.runtimeType);
+      print(querySnapshot.docs[1]);
+      print(querySnapshot.docs[1].runtimeType);
+      print(querySnapshot.docs[1].data());
+      print(querySnapshot.docs[1].data().runtimeType);
+      print("${querySnapshot.docs[1].data()["google"].toString()} google");
+      print("${querySnapshot.docs[1].data()["google"].toString().runtimeType} google");
+      print("${querySnapshot.docs[1].data()["google"].runtimeType} google");
+      print("docs olmuyor");
+      return querySnapshot.docs[1];
+    });
     //Stream<List<DocumentSnapshot>>-->Stream<List<GeneralSetting>>
     Stream<List<GeneralSetting>> streamListSettings = streamListDocument.map(
-      //listofdocsnap firebaseden ne map ne list olarak geliyor documentsnapshot geliyor
-            (listofDocSnap) => listofDocSnap
-            .map((docSnap) => GeneralSetting.fromMap(docSnap.data()))
+        (docSnap) => GeneralSetting.fromMap(docSnap.data()))
             .toList());
     print(streamListDocument.length);
-    print(streamListDocument.first);
+    print("${streamListDocument.first} first komudu");
     print(streamListDocument);
-
     print("absürt2");
     print(streamListSettings);
     return streamListSettings;
   }
-
 }

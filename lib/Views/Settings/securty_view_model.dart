@@ -29,7 +29,6 @@ class SecurityViewModel extends ChangeNotifier {
     print("deneme");
   }*/
 
-
   Stream<List<GeneralSetting>> getSettingList() {
     // Stream<QuerySnapshot> önce okun sağındakine çeviriyoruz -->
     //Stream<List<DocumentSnapshot
@@ -39,21 +38,49 @@ class SecurityViewModel extends ChangeNotifier {
     print(FirebaseFirestore.instance.collection("genel_ayar").doc("login_setting"));
     print("deneme");
     Stream<List<QueryDocumentSnapshot<Map<String, dynamic>>>>
-        streamListDocument = FirebaseFirestore.instance.collection("genel_ayar").snapshots()
-            .map((querySnapshot) => querySnapshot.docs);
-    //Stream<List<DocumentSnapshot>>-->Stream<List<GeneralSetting>>
-    Stream<List<GeneralSetting>> streamListSettings = streamListDocument.map(
-      //listofdocsnap firebaseden ne map ne list olarak geliyor documentsnapshot geliyor
-        (listofDocSnap) => listofDocSnap
-            .map((docSnap) => GeneralSetting.fromMap(docSnap.data()))
-            .toList());
-    print(streamListDocument.length);
-    print(streamListDocument.first);
-    print(streamListDocument);
+        streamListDocument = FirebaseFirestore.instance
+            .collection("genel_ayar")
+            .snapshots()
+            .map((querySnapshot) {
+              print("başlangıc");
+      print("${querySnapshot.docs[1]} daedw");
+      print("${querySnapshot.docs[1].get.toString()} daedw");
+      print("${querySnapshot.docs} daedw");
+      print("docs olmuyor");
+      return querySnapshot.docs;
+    });
+    print("olm*************************************");
 
-    print("absürt2");
-    print(streamListSettings);
+    //Stream<List<DocumentSnapshot>>-->Stream<List<GeneralSetting>>
+
+    Stream<List<GeneralSetting>> streamListSettings = streamListDocument.map(
+        //listofdocsnap firebaseden ne map ne list olarak geliyor documentsnapshot geliyor
+        (listofDocSnap) {
+          print("başlangıc2");
+          print(listofDocSnap);
+          print(listofDocSnap[0].data());
+          print(listofDocSnap[0].get);
+          print(listofDocSnap[1].data());
+          print("$listofDocSnap listofdocsnap denemesi");
+
+      return listofDocSnap.map((docSnap) {
+        print("başlangıc3");
+        print(docSnap);
+        print("$docSnap docSnap denemesi");
+        print("${docSnap.reference} docSnap denemesi");
+        return GeneralSetting.fromMap(docSnap.data());
+      }).toList();
+    });
+
+
+
+    // print("document bitiş");
+    // print(streamListDocument.length);
+    // print(streamListDocument.first);
+    // print(streamListDocument);
+    //
+    // print("absürt2");
+    // print(streamListSettings);
     return streamListSettings;
   }
-
 }

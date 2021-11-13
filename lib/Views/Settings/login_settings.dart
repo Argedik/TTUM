@@ -56,13 +56,13 @@ class _LoginSettingsState extends State<LoginSettings> {
                 stops: [0.0, 0.318, 0.657, 1.0],
               ),
             ),
-            child: StreamBuilder<List<GeneralSetting>>(
-              stream:Provider.of<LoginSettingsViewModel>(context, listen: false)
-                  .getSettingList(),
-              builder: (BuildContext context,  snapshot) {
+            child: StreamBuilder<GeneralSetting>(
+              stream:
+                  Provider.of<LoginSettingsViewModel>(context, listen: false)
+                      .getSettingList(),
+              builder: (BuildContext context, snapshot) {
                 if (snapshot.hasError) {
                   print(snapshot.error);
-                  print("geliyor");
                   return const Center(
                     child: Text("Bir hata oluştu. Daha sonra tekrar deneyiniz"),
                   );
@@ -100,36 +100,64 @@ class _LoginSettingsState extends State<LoginSettings> {
                                     // value: index==b?true:false,
                                     onChanged: (val) async {
                                       setState(
-                                            () {
+                                        () {
                                           /*_isChecked[index] = val!;
                                           Get.to(Ttum());*/
                                           //_isChecked[index] = val!;
+                                          // _ischecked listesini false ile doldur sadece indexi true yap
+                                          var c = val;
+                                          print("deneme");
+                                          print(val);
+                                          print(snapshot);
+                                          // _isChecked = List<bool>.filled(Menues().securty.length, false);
+
+/*                                          snapshot.data!.toMap().forEach(
+                                              (k, v) => user_list.add(
+                                                  GeneralSetting(
+                                                      google: 1,
+                                                      kullanici_adi: 2,
+                                                      Anonymously: 3,
+                                                      email: 4,
+                                                      sms: 5)));*/
+                                          // print(user_list.toList()[0].toString());
+                                          print("deneme2");
+                                          print(snapshot.data!.toMap());
+                                          print(snapshot.data!.toMap().values.toList());
+                                          print(snapshot.data!.toMap().runtimeType);
+                                          print("wqd");
+                                          print(snapshot.data!.Anonymously);
                                           var a = 0;
                                           for (var i in _isChecked) {
                                             _isChecked[a] = false;
                                             a++;
                                           }
                                           _isChecked[index] = true;
+                                          snapshot.data!.Anonymously;
                                         },
                                       );
+                                      var userList = snapshot.data!.toMap().values.toList();
+                                      // _ischecked listesini b listesi ile eşleştir
                                       var a = 0;
                                       List<int> b = [];
-                                      for (var i in _isChecked) {
-                                        _isChecked[a] == false
+                                      for (var i in userList) {
+                                        userList[a] == 0
                                             ? b.add(0)
                                             : b.add(1);
-                                        print(b);
+                                        // print(b);
                                         a++;
                                       }
-/*                                      await context
-                                          .read<SecurityViewModel>()
-                                          .UpdateSecurtySettings(
+                                      print(userList[0]);
+                                      print(userList);
+                                      print("absürt");
+                                      await context
+                                          .read<LoginSettingsViewModel>()
+                                          .UpdateSettings(
                                             Anonymously: b[0],
                                             email: b[1],
                                             sms: b[2],
                                             kullanici_adi: b[3],
                                             google: b[4],
-                                          );*/
+                                          );
                                     },
                                   ),
                                 ),
@@ -166,9 +194,9 @@ class _LoginSettingsState extends State<LoginSettings> {
                                           0, detay.indexOf(",")),
                                       backgroundColor: ttum,
                                       titleStyle:
-                                      TextStyle(color: Colors.white),
+                                          TextStyle(color: Colors.white),
                                       middleTextStyle:
-                                      TextStyle(color: Colors.white),
+                                          TextStyle(color: Colors.white),
                                       middleText: detay.substring(
                                           detay.indexOf(",") + 2, detay.length),
                                     );

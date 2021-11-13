@@ -28,6 +28,20 @@ class Database {
         .set(salesAsMap);
   }
 
+  Future<void> setDocumentData({
+    required String collectionPath,
+    required String documentPath,
+    required Map<String, dynamic> salesAsMap,
+    // String? documentRef
+  }) async {
+    await _firestore
+        .collection(collectionPath)
+    //istenirse cari kodu olarak id tanımlanabilir
+    //.doc(Sales.fromMap(salesAsMap).cari_kodu)
+    // .doc(documentRef)
+        .doc(documentPath)
+        .set(salesAsMap);
+  }
 //Ayar güncelleme
 
 /*  Future<void> setSettings({

@@ -17,8 +17,9 @@ class LoginSettings extends StatefulWidget {
 }
 
 class _LoginSettingsState extends State<LoginSettings> {
-  late List<bool> _isChecked;
 
+
+  late List<bool> _isChecked;
   @override
   void initState() {
     super.initState();
@@ -76,6 +77,43 @@ class _LoginSettingsState extends State<LoginSettings> {
                       padding: const EdgeInsets.all(edgeInsetsAll),
                       itemCount: Menues().securty.length,
                       itemBuilder: (BuildContext context, int index) {
+
+                        // print("absürt");
+                        // print(index);
+                        // print("${_isChecked[index]} _isChecked");
+                        // print("${_isChecked} _isChecked");
+                        /*var yg = 0;
+                        for (var i in firebaseCheckbox) {
+                          _isChecked[yg] = false;
+                          yg++;
+                        }
+                        _isChecked[index] = true;*/
+
+                        var list= snapshot.data!.toMap().values.toList();
+                        bool deneme3(){
+                          if( list[4]==1 && index == 2 && _isChecked[index]==true){
+                            _isChecked[2]=false;
+                            _isChecked[4]=true;
+                            return true;
+                          }else if(list[2]==1 && index==4 && _isChecked[index]==true){
+                            _isChecked[2]=true;
+                            _isChecked[4]=false;
+                            return true;
+                          }else if ( _isChecked[index]==true && index!=4 && index!=2){
+                            return true;
+                          }else{
+                            return false;
+                          }
+                        }
+                        bool deneme =deneme3();
+                        print("deneme $deneme");
+                        // print("deneme $deneme");
+/*                        print("$deneme deneme");
+                        print(deneme3());
+                        print(deneme2);
+                        print("son");*/
+
+
                         return Card(
                           //kod dışarı taşmasın clip.antialias
                           clipBehavior: Clip.antiAlias,
@@ -96,36 +134,20 @@ class _LoginSettingsState extends State<LoginSettings> {
                                   data: ThemeData(
                                       unselectedWidgetColor: Colors.white),
                                   child: CheckboxListTile(
-                                    value: _isChecked[index],
+                                    // value: list[index] == 0 ? false : true,
+                                    value: deneme,
                                     // value: index==b?true:false,
                                     onChanged: (val) async {
                                       setState(
                                         () {
-                                          /*_isChecked[index] = val!;
-                                          Get.to(Ttum());*/
-                                          //_isChecked[index] = val!;
-                                          // _ischecked listesini false ile doldur sadece indexi true yap
-                                          var c = val;
-                                          print("deneme");
-                                          print(val);
-                                          print(snapshot);
-                                          // _isChecked = List<bool>.filled(Menues().securty.length, false);
-
-/*                                          snapshot.data!.toMap().forEach(
-                                              (k, v) => user_list.add(
-                                                  GeneralSetting(
-                                                      google: 1,
-                                                      kullanici_adi: 2,
-                                                      Anonymously: 3,
-                                                      email: 4,
-                                                      sms: 5)));*/
-                                          // print(user_list.toList()[0].toString());
-                                          print("deneme2");
+/*                                          print("deneme2");
                                           print(snapshot.data!.toMap());
-                                          print(snapshot.data!.toMap().values.toList());
-                                          print(snapshot.data!.toMap().runtimeType);
-                                          print("wqd");
-                                          print(snapshot.data!.Anonymously);
+                                          print(snapshot.data!
+                                              .toMap()
+                                              .values
+                                              .toList());
+                                          print("yeniler");
+                                          print(snapshot.data!.toMap().values);*/
                                           var a = 0;
                                           for (var i in _isChecked) {
                                             _isChecked[a] = false;
@@ -135,28 +157,30 @@ class _LoginSettingsState extends State<LoginSettings> {
                                           snapshot.data!.Anonymously;
                                         },
                                       );
-                                      var userList = snapshot.data!.toMap().values.toList();
-                                      // _ischecked listesini b listesi ile eşleştir
+/*                                      List firebaseList = snapshot.data!
+                                          .toMap()
+                                          .values
+                                          .toList();
+                                      print(firebaseList);*/
+
+
+                                      List<int> checkBoxList = [];
+                                      // checkbox işaretli indexi checkBoxList e atama
                                       var a = 0;
-                                      List<int> b = [];
-                                      for (var i in userList) {
-                                        userList[a] == 0
-                                            ? b.add(0)
-                                            : b.add(1);
-                                        // print(b);
+                                      for (var i in _isChecked) {
+                                        _isChecked[a] == false
+                                            ? checkBoxList.add(0)
+                                            : checkBoxList.add(1);
                                         a++;
                                       }
-                                      print(userList[0]);
-                                      print(userList);
-                                      print("absürt");
                                       await context
                                           .read<LoginSettingsViewModel>()
                                           .UpdateSettings(
-                                            Anonymously: b[0],
-                                            email: b[1],
-                                            sms: b[2],
-                                            kullanici_adi: b[3],
-                                            google: b[4],
+                                            Anonymously: checkBoxList[0],
+                                            email: checkBoxList[1],
+                                            sms: checkBoxList[2],
+                                            kullanici_adi: checkBoxList[3],
+                                            google: checkBoxList[4],
                                           );
                                     },
                                   ),
